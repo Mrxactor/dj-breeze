@@ -1,0 +1,209 @@
+/* DJ Breeze — responsive layer for the locked design master.
+   Desktop (981px+) intentionally untouched. */
+
+@media (max-width: 980px){
+  :root{--mobile-gutter:clamp(16px,4vw,28px)}
+  html{scroll-padding-top:98px;-webkit-text-size-adjust:100%}
+  body{overflow-x:hidden}
+  img,video{max-width:100%}
+  .wrap,.nav-inner,.hero-content{width:calc(100% - (var(--mobile-gutter) * 2)) !important}
+  .section{padding:88px 0 !important}
+
+  /* Header: compact, readable, still visually part of the master design. */
+  .nav{
+    height:auto !important;
+    min-height:82px !important;
+    padding:max(9px,env(safe-area-inset-top)) 0 8px !important;
+    background:linear-gradient(to bottom,rgba(7,7,7,.98),rgba(7,7,7,.88)) !important;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(12px) !important;
+  }
+  .nav-inner{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    grid-template-rows:auto auto !important;
+    gap:7px 12px !important;
+    align-items:center !important;
+  }
+  .brand{grid-column:1;grid-row:1;min-width:0;white-space:nowrap;font-size:clamp(19px,3vw,24px) !important}
+  .brand small{font-size:7px !important;margin-left:7px !important}
+  .site-sound-chip{
+    grid-column:2 !important;grid-row:1 !important;justify-self:end !important;
+    min-height:36px !important;padding:8px 10px !important;opacity:1 !important;cursor:pointer !important;
+  }
+  .nav-links{
+    grid-column:1/-1 !important;grid-row:2 !important;
+    display:flex !important;gap:22px !important;width:100% !important;
+    overflow-x:auto !important;white-space:nowrap !important;
+    padding:1px 0 2px !important;font-size:10px !important;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{flex:0 0 auto;opacity:.8 !important}
+
+  /* Hero uses the actual viewport, including modern mobile browser chrome. */
+  .hero{min-height:100svh !important;min-height:100dvh !important}
+  .hero-content{padding:128px 0 42px !important}
+  .hero h1{font-size:clamp(82px,18vw,148px) !important;line-height:.75 !important}
+  .hero-sub{gap:24px !important}
+  .hero-sub p{font-size:clamp(21px,3vw,30px) !important}
+  .hero-media video{object-position:center center !important}
+
+  /* Editorial sections: one clear reading column instead of squeezed desktop pairs. */
+  .manifesto-grid,.services-grid{grid-template-columns:1fr !important;gap:42px !important}
+  .manifesto h2{font-size:clamp(58px,10vw,88px) !important}
+  .manifesto-copy{padding-top:0 !important}
+  .manifesto-meta{grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:10px !important}
+  .section-head{
+    display:flex !important;flex-direction:column !important;align-items:flex-start !important;
+    gap:18px !important;margin-bottom:34px !important;
+  }
+  .section-head h2{font-size:clamp(56px,9.5vw,84px) !important}
+  .section-head p{max-width:680px !important;font-size:15px !important}
+
+  /* Keep the approved master Sound treatment: one substantial card per row. */
+  .era-grid{grid-template-columns:1fr !important;gap:14px !important}
+  .era-card{
+    min-height:0 !important;height:auto !important;aspect-ratio:16/11 !important;
+    width:100% !important;
+  }
+  .era-card img{width:100% !important;height:100% !important;object-fit:cover !important}
+
+  /* Live gallery keeps the master's hierarchy but scales fluidly. */
+  .gallery{
+    grid-template-columns:1fr 1fr !important;
+    grid-template-rows:none !important;
+    gap:10px !important;
+  }
+  .tile,.tile.tall{height:auto !important;aspect-ratio:4/3 !important;grid-row:auto !important}
+  .tile.tall{grid-column:1/-1 !important;aspect-ratio:16/9 !important}
+  .tile img,.tile video{width:100% !important;height:100% !important;object-fit:cover !important;object-position:center !important}
+
+  /* Archive: two clean columns, no overflow, no stretching. */
+  .poster-rail{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:12px !important}
+  .poster{min-width:0 !important}
+  .poster img{width:100% !important;height:auto !important;object-fit:cover !important}
+  .poster-cap{font-size:8px !important;padding:9px 2px !important;gap:8px !important}
+
+  /* Services / booking stay generous and readable. */
+  .services h2{position:static !important}
+  .service-row{grid-template-columns:54px minmax(0,1fr) auto !important;gap:12px !important}
+  .service-row strong{font-size:clamp(30px,5vw,46px) !important}
+  .booking{min-height:auto !important;padding:96px 0 !important}
+  .booking-inner{width:calc(100% - (var(--mobile-gutter) * 2)) !important}
+  .booking h2{font-size:clamp(72px,13vw,112px) !important}
+  .booking p{font-size:16px !important}
+  .booking-form-wrap{width:100% !important;max-width:760px !important;margin-left:auto !important;margin-right:auto !important}
+
+  /* Supabase-driven sections inherit the same responsive language. */
+  .cms-video-grid,.cms-gig-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:12px !important}
+}
+
+@media (max-width: 640px){
+  :root{--mobile-gutter:13px}
+  html{scroll-padding-top:91px}
+  .section{padding:76px 0 !important}
+  .wrap,.nav-inner,.hero-content{width:calc(100% - 26px) !important}
+
+  .nav{min-height:77px !important;padding:max(8px,env(safe-area-inset-top)) 0 6px !important}
+  .nav-inner{gap:5px 10px !important}
+  .brand{font-size:18px !important}
+  .brand small{display:none !important}
+  .site-sound-chip{min-height:34px !important;padding:7px 9px !important;font-size:8px !important}
+  .site-sound-chip #siteSoundLabel{display:inline !important}
+  .nav-links{font-size:9px !important;gap:18px !important}
+
+  .hero{min-height:100svh !important;min-height:100dvh !important}
+  .hero-content{padding:112px 0 calc(28px + env(safe-area-inset-bottom)) !important}
+  .hero-topline{align-items:flex-start !important;margin-bottom:15px !important}
+  .hero h1{font-size:clamp(68px,24vw,103px) !important;line-height:.75 !important}
+  .hero-sub{flex-direction:column !important;align-items:flex-start !important;gap:20px !important;margin-top:22px !important}
+  .hero-sub p{font-size:clamp(19px,5.4vw,23px) !important;max-width:355px !important}
+  .hero-actions{justify-content:flex-start !important;gap:8px !important}
+  .hero-actions .btn{min-height:44px !important;padding:0 14px !important;font-size:9px !important}
+  .hero-sound-corner{left:12px !important;bottom:12px !important}
+
+  .marquee-item{font-size:12px !important;padding:14px 22px !important}
+  .manifesto-grid{gap:34px !important}
+  .manifesto h2,.section-head h2{font-size:clamp(48px,15vw,61px) !important;line-height:.87 !important}
+  .manifesto-copy p{font-size:clamp(23px,6.8vw,28px) !important}
+  .manifesto-meta{grid-template-columns:1fr !important;gap:0 !important}
+  .meta-box{padding:11px 0;border-bottom:1px solid rgba(0,0,0,.12)}
+  .section-head{gap:13px !important;margin-bottom:28px !important}
+  .section-head p{font-size:14px !important;line-height:1.55 !important;max-width:100% !important}
+
+  /* Master Sound cards scale by width, not arbitrary pixel heights. */
+  .era-card{aspect-ratio:4/5 !important;min-height:0 !important}
+  .era-copy{left:18px !important;right:18px !important;bottom:18px !important}
+  .era-copy h3{font-size:clamp(34px,10vw,42px) !important}
+  .era-copy p{font-size:13px !important;line-height:1.45 !important}
+
+  /* On phones Live becomes the simple one-column layout from the approved master. */
+  .gallery{grid-template-columns:1fr !important;gap:10px !important}
+  .tile,.tile.tall{
+    grid-column:auto !important;grid-row:auto !important;
+    height:auto !important;aspect-ratio:4/5 !important;
+  }
+  .tile.tall{aspect-ratio:1/1 !important}
+  .tile .tag{left:10px !important;bottom:10px !important;padding:7px 9px !important;font-size:8px !important}
+
+  /* Same two-column flyer rhythm as the approved standalone version. */
+  .poster-rail{grid-template-columns:1fr 1fr !important;gap:9px !important}
+  .poster img{aspect-ratio:3/4 !important;object-fit:cover !important}
+  .poster:nth-child(2) img{aspect-ratio:1/1 !important}
+  .poster-cap{display:none !important}
+
+  .services-grid{gap:30px !important}
+  .services h2{font-size:clamp(52px,15vw,66px) !important}
+  .service-row{grid-template-columns:42px minmax(0,1fr) !important;gap:9px !important;padding:20px 0 !important}
+  .service-row strong{font-size:clamp(26px,8vw,34px) !important;min-width:0 !important;overflow-wrap:anywhere}
+  .service-row em{grid-column:2 !important;font-size:9px !important}
+
+  .booking{padding:78px 0 calc(82px + env(safe-area-inset-bottom)) !important}
+  .booking-inner{width:calc(100% - 26px) !important}
+  .booking h2{font-size:clamp(58px,18vw,76px) !important;line-height:.83 !important;margin:12px 0 24px !important}
+  .booking p{font-size:14px !important;line-height:1.55 !important}
+  .booking .chips{gap:7px !important;margin-bottom:24px !important}
+  .booking .chips a,.booking .chips span{min-height:38px;display:inline-flex;align-items:center;padding:8px 10px !important;font-size:8px !important}
+  .booking-form-wrap{padding:14px !important;border-radius:14px !important}
+  .booking-form-grid{grid-template-columns:1fr !important;gap:11px !important}
+  .booking-field.full{grid-column:auto !important}
+  .booking-field input,.booking-field select,.booking-field textarea{font-size:16px !important}
+  .booking-form-actions{display:grid !important;grid-template-columns:1fr !important}
+  .booking-form-actions .btn{width:100% !important;min-height:46px !important}
+
+  .cms-video-grid,.cms-gig-grid{grid-template-columns:1fr !important}
+  .cms-video-copy{padding:14px !important}
+  .cms-gig{min-height:0 !important;padding:18px !important}
+
+  footer{padding-bottom:calc(34px + env(safe-area-inset-bottom)) !important}
+  .footer-grid{flex-direction:column !important;align-items:flex-start !important;gap:18px !important}
+  .footer-brand{font-size:38px !important}
+  .footer-right{text-align:left !important;font-size:11px !important}
+}
+
+@media (max-width: 380px){
+  :root{--mobile-gutter:11px}
+  .wrap,.nav-inner,.hero-content{width:calc(100% - 22px) !important}
+  .brand{font-size:17px !important}
+  .site-sound-chip #siteSoundLabel{display:none !important}
+  .nav-links{gap:15px !important}
+  .hero h1{font-size:clamp(66px,23vw,88px) !important}
+  .manifesto h2,.section-head h2{font-size:46px !important}
+  .era-copy h3{font-size:34px !important}
+  .booking h2{font-size:56px !important}
+}
+
+@media (max-width: 980px) and (orientation: landscape) and (max-height: 560px){
+  .hero{min-height:520px !important}
+  .hero-content{padding-top:110px !important;padding-bottom:28px !important}
+  .hero h1{font-size:clamp(68px,13vw,96px) !important}
+  .hero-sub p{font-size:18px !important}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .reveal{transition:none !important;transform:none !important;opacity:1 !important}
+  .marquee-track{animation:none !important}
+  .era-card img,.tile img,.poster img{transition:none !important}
+}
