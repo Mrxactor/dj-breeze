@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DJ Breeze Admin — Bookings</title>
+<style>
+:root{--bg:#080808;--panel:#111;--panel2:#171717;--text:#f4f1e9;--muted:#999;--line:#292929;--ok:#9be6aa;--warn:#ffd179;--danger:#ff9d9d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.wrap{width:min(calc(100% - 28px),1180px);margin:auto;padding:28px 0 80px}.top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:36px}.brand{font-size:25px;font-weight:950;letter-spacing:-.05em}.brand small{font-size:10px;letter-spacing:.15em;color:#777;margin-left:8px}.back{color:#aaa;text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}.hero{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:26px}.hero h1{font-size:clamp(46px,8vw,92px);line-height:.88;letter-spacing:-.065em;margin:0}.hero p{max-width:520px;color:#999;line-height:1.55;margin:0}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.stat{border:1px solid var(--line);background:var(--panel);padding:17px}.stat b{display:block;font-size:34px;letter-spacing:-.05em}.stat span{font-size:10px;text-transform:uppercase;letter-spacing:.13em;color:#888}.toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:18px 0}.filters{display:flex;gap:8px;flex-wrap:wrap}.btn,.filter{border:1px solid #343434;background:#151515;color:#fff;border-radius:999px;padding:10px 13px;font-size:10px;text-transform:uppercase;letter-spacing:.11em;cursor:pointer;text-decoration:none}.btn.primary,.filter.active{background:#f2eee5;color:#090909;border-color:#f2eee5}.btn.accept{border-color:#42684c}.btn.decline{border-color:#704545}.btn:disabled{opacity:.4;cursor:not-allowed}.notice{border:1px solid var(--line);background:var(--panel);padding:20px;color:#aaa;line-height:1.6;margin:18px 0}.login{width:min(100%,520px);border:1px solid var(--line);background:var(--panel);padding:22px;margin-top:18px}.login h2{margin:0 0 8px}.login p{color:#888;line-height:1.5}.field{display:flex;flex-direction:column;gap:7px;margin:12px 0}.field label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#888}.field input{border:1px solid #333;background:#0d0d0d;color:#fff;padding:13px;border-radius:9px;font:inherit}.list{display:grid;gap:10px}.booking{border:1px solid var(--line);background:var(--panel);padding:18px}.booking-head{display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:15px;align-items:center}.booking-title{font-size:22px;font-weight:850;letter-spacing:-.035em}.meta{font-size:12px;color:#999;line-height:1.45}.pill{justify-self:end;border:1px solid #353535;border-radius:999px;padding:8px 10px;font-size:9px;letter-spacing:.11em;text-transform:uppercase}.pill.pending{color:var(--warn)}.pill.accepted{color:var(--ok)}.pill.declined{color:var(--danger)}.details{display:none;border-top:1px solid var(--line);margin-top:16px;padding-top:16px}.booking.open .details{display:block}.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.box{background:var(--panel2);padding:14px}.box small{display:block;color:#777;text-transform:uppercase;letter-spacing:.11em;margin-bottom:7px}.box a{color:#fff}.message{grid-column:1/-1;white-space:pre-wrap}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.empty{text-align:center;padding:50px 15px;color:#777;border:1px dashed #2b2b2b}.status{color:#888;font-size:12px;margin-top:10px}.hidden{display:none!important}@media(max-width:760px){.hero{display:block}.hero p{margin-top:16px}.booking-head{grid-template-columns:1fr auto}.booking-head .meta:nth-of-type(2){grid-column:1/-1}.pill{grid-row:1;grid-column:2}.detail-grid{grid-template-columns:1fr}.message{grid-column:auto}.stats{grid-template-columns:1fr 1fr 1fr}.stat b{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="brand">DJ BREEZE <small>ADMIN / BOOKINGS</small></div><a class="back" href="./">← Admin</a></div>
+  <div class="hero"><h1>BOOKING<br>INBOX.</h1><p>Requests från hemsidan hamnar här. Öppna en request, acceptera eller avböj, svara kunden och lägg ett accepterat event i kalendern.</p></div>
+
+  <div id="setupNotice" class="notice hidden"><strong>Database not connected.</strong><br>Bookings-adminen är färdigbyggd, men Supabase måste kopplas innan requests kan sparas och visas här.</div>
+
+  <div id="loginBox" class="login hidden">
+    <h2>Admin login</h2><p>Logga in med det Supabase-konto som är godkänt som DJ Breeze-admin.</p>
+    <form id="loginForm">
+      <div class="field"><label>Email</label><input id="loginEmail" type="email" autocomplete="username" required></div>
+      <div class="field"><label>Password</label><input id="loginPassword" type="password" autocomplete="current-password" required></div>
+      <button class="btn primary" type="submit">Log in</button>
+      <div id="loginStatus" class="status"></div>
+    </form>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="stats">
+      <div class="stat"><b id="pendingCount">0</b><span>Pending</span></div>
+      <div class="stat"><b id="acceptedCount">0</b><span>Accepted</span></div>
+      <div class="stat"><b id="declinedCount">0</b><span>Declined</span></div>
+    </div>
+    <div class="toolbar"><div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="pending">Pending</button><button class="filter" data-filter="accepted">Accepted</button><button class="filter" data-filter="declined">Declined</button></div><button class="btn" id="logoutBtn">Log out</button></div>
+    <div id="bookingsList" class="list"></div>
+  </div>
+</div>
+<script>
+let cfg=null, token=sessionStorage.getItem('dj_breeze_admin_token')||'', bookings=[], currentFilter='all';
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const base=()=>cfg.url.replace(/\/$/,'');
+
+async function loadConfig(){
+  try{const r=await fetch('../content/backend.json',{cache:'no-store'});if(r.ok)cfg=await r.json();}catch(e){}
+  if(!cfg||!cfg.enabled||!cfg.url||!cfg.anonKey){$('#setupNotice').classList.remove('hidden');return;}
+  if(token){showApp();await loadBookings();}else{$('#loginBox').classList.remove('hidden');}
+}
+
+$('#loginForm').addEventListener('submit',async e=>{
+  e.preventDefault(); const status=$('#loginStatus'); status.textContent='Logging in…';
+  try{
+    const r=await fetch(base()+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:cfg.anonKey,'Content-Type':'application/json'},body:JSON.stringify({email:$('#loginEmail').value.trim(),password:$('#loginPassword').value})});
+    const data=await r.json(); if(!r.ok||!data.access_token)throw new Error(data.error_description||data.msg||'Login failed');
+    token=data.access_token; sessionStorage.setItem('dj_breeze_admin_token',token); $('#loginBox').classList.add('hidden'); showApp(); await loadBookings();
+  }catch(err){status.textContent=err.message||'Login failed';}
+});
+
+function showApp(){$('#app').classList.remove('hidden');}
+$('#logoutBtn').addEventListener('click',()=>{sessionStorage.removeItem('dj_breeze_admin_token');location.reload();});
+
+async function api(path,options={}){
+  const headers=Object.assign({apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},options.headers||{});
+  const r=await fetch(base()+path,Object.assign({},options,{headers}));
+  if(r.status===401){sessionStorage.removeItem('dj_breeze_admin_token');location.reload();throw new Error('Session expired');}
+  if(!r.ok)throw new Error(await r.text());
+  const text=await r.text();return text?JSON.parse(text):null;
+}
+
+async function loadBookings(){
+  $('#bookingsList').innerHTML='<div class="empty">Loading bookings…</div>';
+  try{bookings=await api('/rest/v1/bookings?select=*&order=created_at.desc');render();}
+  catch(err){$('#bookingsList').innerHTML='<div class="notice">Could not load bookings. '+esc(err.message)+'</div>';}
+}
+
+function render(){
+  $('#pendingCount').textContent=bookings.filter(b=>b.status==='pending').length;
+  $('#acceptedCount').textContent=bookings.filter(b=>b.status==='accepted').length;
+  $('#declinedCount').textContent=bookings.filter(b=>b.status==='declined').length;
+  const rows=currentFilter==='all'?bookings:bookings.filter(b=>b.status===currentFilter);
+  if(!rows.length){$('#bookingsList').innerHTML='<div class="empty">No '+esc(currentFilter==='all'?'bookings':currentFilter+' bookings')+' yet.</div>';return;}
+  $('#bookingsList').innerHTML=rows.map(b=>`
+    <article class="booking" data-id="${esc(b.id)}">
+      <div class="booking-head" role="button" tabindex="0" onclick="this.parentElement.classList.toggle('open')">
+        <div><div class="booking-title">${esc(label(b.event_type))}</div><div class="meta">${esc(b.customer_name)} · ${esc(formatCreated(b.created_at))}</div></div>
+        <div class="meta"><strong>${esc(formatDate(b.event_date))}</strong><br>${esc(b.venue||'')}</div>
+        <div class="meta">${esc(b.customer_email)}<br>${esc(b.customer_phone||'')}</div>
+        <div class="pill ${esc(b.status)}">${esc(b.status)}</div>
+      </div>
+      <div class="details">
+        <div class="detail-grid">
+          <div class="box"><small>Customer</small>${esc(b.customer_name)}</div>
+          <div class="box"><small>Event date</small>${esc(formatDate(b.event_date))}</div>
+          <div class="box"><small>Email</small><a href="mailto:${encodeURIComponent(b.customer_email)}">${esc(b.customer_email)}</a></div>
+          <div class="box"><small>Phone</small>${esc(b.customer_phone||'—')}</div>
+          <div class="box"><small>Venue / City</small>${esc(b.venue||'—')}</div>
+          <div class="box"><small>Received</small>${esc(formatCreated(b.created_at))}</div>
+          <div class="box message"><small>Message</small>${esc(b.message||'—')}</div>
+        </div>
+        <div class="actions">
+          <button class="btn accept" onclick="setStatus('${b.id}','accepted')">Accept</button>
+          <button class="btn decline" onclick="setStatus('${b.id}','declined')">Decline</button>
+          <a class="btn" href="mailto:${encodeURIComponent(b.customer_email)}?subject=${encodeURIComponent('DJ Breeze booking — '+label(b.event_type)+' — '+(b.event_date||''))}">Reply by email</a>
+          <button class="btn" onclick="calendar('${b.id}')">Add to calendar</button>
+        </div>
+      </div>
+    </article>`).join('');
+}
+
+async function setStatus(id,status){
+  try{await api('/rest/v1/bookings?id=eq.'+encodeURIComponent(id),{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({status})});const b=bookings.find(x=>x.id===id);if(b)b.status=status;render();}
+  catch(err){alert('Could not update booking: '+err.message);}
+}
+
+function calendar(id){
+  const b=bookings.find(x=>x.id===id);if(!b)return;
+  const day=(b.event_date||'').replaceAll('-','');if(!day){alert('This request has no event date.');return;}
+  const next=new Date(b.event_date+'T00:00:00');next.setDate(next.getDate()+1);const end=next.toISOString().slice(0,10).replaceAll('-','');
+  const text=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//DJ Breeze//Bookings//EN','BEGIN:VEVENT','DTSTART;VALUE=DATE:'+day,'DTEND;VALUE=DATE:'+end,'SUMMARY:DJ Breeze — '+label(b.event_type),'LOCATION:'+(b.venue||''),'DESCRIPTION:Booking contact: '+b.customer_name+' | '+b.customer_email+' | '+(b.customer_phone||''),'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/calendar'}));a.download='dj-breeze-booking-'+day+'.ics';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+
+function label(v){return({club:'Club / Nightlife',wedding:'Wedding',private:'Private Party',corporate:'Corporate Event',public:'Public Event / Festival'})[v]||v||'Booking';}
+function formatDate(v){if(!v)return'No date';const d=new Date(v+'T12:00:00');return d.toLocaleDateString('sv-SE',{year:'numeric',month:'short',day:'numeric'});}
+function formatCreated(v){if(!v)return'';return new Date(v).toLocaleString('sv-SE',{dateStyle:'medium',timeStyle:'short'});}
+
+document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');currentFilter=btn.dataset.filter;render();}));
+loadConfig();
+</script>
+</body>
+</html>
