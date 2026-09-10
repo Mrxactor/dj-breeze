@@ -1,0 +1,44 @@
+name: Fix CMS v2
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-cms-v2.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch availability API and legacy media previews
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('js/cms-runtime.js')
+          s=p.read_text(encoding='utf-8')
+          old="""const r=await fetch(base+'/rest/v1/rpc/check_booking_date',{method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify({p_date:date})});
+        if(!r.ok)throw new Error('availability');const state=await r.json();if(run!==seq)return;"""
+          new="""const r=await fetch(base+'/rest/v1/availability?select=status&event_date=eq.'+encodeURIComponent(date),{headers,cache:'no-store'});
+        if(!r.ok)throw new Error('availability');const data=await r.json();const state=(data&&data[0]&&data[0].status)||'unknown';if(run!==seq)return;"""
+          if old not in s: raise SystemExit('availability block not found')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+          m=Path('admin/media.html')
+          t=m.read_text(encoding='utf-8')
+          marker='async function api(path,o={})'
+          helper="const previewUrl=v=>String(v||'').startsWith('assets/')?'../'+v:v;"
+          if helper not in t:
+              if marker not in t: raise SystemExit('media marker not found')
+              t=t.replace(marker,helper+marker,1)
+          t=t.replace('esc(m.file_url)}\\" alt=','esc(previewUrl(m.file_url))}\\" alt=')
+          t=t.replace('esc(m.file_url)}\\" ${m.poster_url?', 'esc(previewUrl(m.file_url))}\\" ${m.poster_url?')
+          t=t.replace('esc(m.poster_url)}\\"`:', 'esc(previewUrl(m.poster_url))}\\"`:')
+          m.write_text(t,encoding='utf-8')
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/cms-runtime.js admin/media.html
+          git commit -m "Secure availability check and fix media previews [skip ci]"
+          git push
