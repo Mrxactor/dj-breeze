@@ -467,6 +467,71 @@
     .poster{max-width:132px}
   }
 
+
+  /* Mobile media scale v3: compact phone layout. */
+  @media (max-width:640px){
+    #sound .era-grid{gap:10px !important}
+    #sound .era-card{max-width:420px !important;margin-inline:auto !important}
+    #sound .era-card img{
+      height:140px !important;
+      max-height:140px !important;
+      object-fit:contain !important;
+      object-position:center !important;
+    }
+    #sound .era-copy{padding:10px 12px 13px !important}
+    #sound .era-copy h3{font-size:24px !important;line-height:.95 !important;margin:5px 0 6px !important}
+    #sound .era-copy p{font-size:11px !important;line-height:1.35 !important}
+
+    #live .gallery{
+      max-width:460px !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:7px !important;
+      margin-inline:auto !important;
+    }
+    #live .tile,#live .tile.tall,#live .tile.tall:first-child{
+      grid-column:auto !important;
+      grid-row:auto !important;
+      width:100% !important;
+      max-width:none !important;
+      height:auto !important;
+      aspect-ratio:4/3 !important;
+    }
+    #live .tile img,#live .tile video{
+      width:100% !important;
+      height:100% !important;
+      object-fit:contain !important;
+      object-position:center !important;
+    }
+    #live .tile .tag{font-size:7px !important;padding:5px 7px !important;left:6px !important;bottom:6px !important}
+
+    .poster-rail{
+      max-width:420px !important;
+      margin-inline:auto !important;
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      gap:7px !important;
+      justify-content:center !important;
+    }
+    .poster{max-width:none !important;width:100% !important}
+    .poster img,.poster:nth-child(2) img{
+      width:100% !important;
+      height:auto !important;
+      aspect-ratio:3/4 !important;
+      object-fit:contain !important;
+      object-position:center !important;
+    }
+    .poster-cap{font-size:6px !important;padding:4px 0 !important;gap:4px !important}
+
+    #live.section{padding-bottom:56px !important}
+    .posters{padding-top:56px !important}
+  }
+
+  @media (max-width:420px){
+    #sound .era-card img{height:118px !important;max-height:118px !important}
+    #sound .era-copy h3{font-size:22px !important}
+    #live .gallery{max-width:330px !important}
+    .poster-rail{max-width:330px !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important}
+  }
+
 </style>
 </head>
 <body>
