@@ -1,0 +1,33 @@
+name: Install responsive master
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/install-responsive-master.yml'
+permissions:
+  contents: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install responsive master stylesheet
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          # Remove older temporary responsive layers if they still exist.
+          import re
+          s=re.sub(r'\s*<link[^>]+href=["\']css/(?:mobile-premium|responsive-master)\.css\?v=[^"\']+["\'][^>]*>','',s,flags=re.I)
+          link='\n<link rel="stylesheet" href="css/responsive-master.css?v=20260910-1">\n'
+          s=s.replace('</head>',link+'</head>',1)
+          p.write_text(s,encoding='utf-8')
+      - name: Commit installation
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Install responsive layer for locked design master [skip ci]"
+          git push
