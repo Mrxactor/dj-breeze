@@ -296,6 +296,24 @@
     .booking-form-wrap{padding:16px}
   }
 
+
+  /* Mobile navigation + readable archive captions. */
+  @media (max-width:980px){
+    .nav{height:auto;min-height:74px;padding:9px 0;background:rgba(7,7,7,.94)}
+    .nav-inner{flex-wrap:wrap;gap:10px 14px}
+    .nav-links{display:flex !important;order:3;width:100%;gap:20px;overflow-x:auto;white-space:nowrap;padding:4px 0 3px;scrollbar-width:none}
+    .nav-links::-webkit-scrollbar{display:none}
+    .nav-links a{flex:0 0 auto;opacity:.88}
+    .site-sound-chip{margin-left:auto}
+  }
+  @media (max-width:640px){
+    .nav{min-height:100px}
+    .nav-links{font-size:10px;gap:18px}
+    .site-sound-chip{padding:8px 10px}
+    .site-sound-chip #siteSoundLabel{display:none}
+    .poster-cap{display:flex !important;flex-direction:column;gap:3px;padding:8px 2px;font-size:8px;line-height:1.35}
+  }
+
 </style>
 </head>
 <body>
@@ -520,14 +538,14 @@
       <div class="footer-brand">DJ BREEZE</div>
       <div class="kicker" style="margin-top:8px">@DJBREEZEOFFICIAL</div>
     </div>
-    <div class="footer-right"><a href="admin/" style="opacity:.55">Admin</a><br>
-      Concept V1 / Static HTML prototype<br>
-      Hero sound stays separate. Site Sound now uses the extended 3-track DJ Breeze website mix. CMS & admin are next-stage features.
+    <div class="footer-right">DJ Breeze — Official<br>
+      Hip-Hop / R&amp;B / Throwback / Live
     </div>
   </div>
 </footer>
 
 <script src="js/app.js?v=20260910-4"></script>
 <script src="js/cms-runtime.js?v=20260910-2"></script>
+<script src="js/site-controls.js?v=20260910-1"></script>
 </body>
 </html>
