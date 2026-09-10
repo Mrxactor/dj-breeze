@@ -1,0 +1,7 @@
+{
+  "provider": "supabase",
+  "enabled": false,
+  "url": "",
+  "anonKey": "",
+  "note": "Only the public Supabase URL and anon/publishable key belong here. Never put a service_role key in this public repository."
+}
