@@ -1,118 +1,23 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DJ Breeze Admin</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DJ Breeze Admin</title>
 <style>
-:root{--bg:#080808;--panel:#111;--text:#f4f1e9;--muted:#979797;--line:#292929;--accent:#f4f1e9}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-.wrap{width:min(calc(100% - 30px),1180px);margin:auto;padding:40px 0 80px}
-.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:45px}
-.logo{font-size:28px;font-weight:950;letter-spacing:-.05em}.badge{font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);padding:8px 10px;border-radius:999px;color:#aaa}
-h1{font-size:clamp(44px,8vw,96px);line-height:.88;letter-spacing:-.065em;margin:0 0 18px}
-.intro{color:#aaa;max-width:720px;line-height:1.55;margin-bottom:36px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card{border:1px solid var(--line);background:var(--panel);padding:24px;min-height:220px;display:flex;flex-direction:column}
-.num{font-size:10px;letter-spacing:.16em;color:#777;margin-bottom:25px}.card h2{font-size:29px;letter-spacing:-.04em;margin:0 0 10px}.card p{color:#999;line-height:1.5;margin:0 0 24px;flex:1}
-.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #353535;border-radius:999px;padding:10px 13px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#fff;text-decoration:none;cursor:pointer;background:#161616}
-.btn.primary{background:#f2eee5;color:#080808;border-color:#f2eee5}.btn.disabled{opacity:.35;pointer-events:none}
-.status{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;color:#777;font-size:12px;line-height:1.6}
-.back{color:#aaa;text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
-@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding-top:24px}.top{align-items:flex-start}.card{min-height:190px}}
+:root{--bg:#080808;--panel:#111;--text:#f4f1e9;--line:#292929}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.wrap{width:min(calc(100% - 30px),1180px);margin:auto;padding:40px 0 80px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:45px}.logo{font-size:28px;font-weight:950;letter-spacing:-.05em}.back{color:#aaa;text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}h1{font-size:clamp(44px,8vw,96px);line-height:.88;letter-spacing:-.065em;margin:0 0 18px}.intro{color:#aaa;max-width:720px;line-height:1.55;margin-bottom:36px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{border:1px solid var(--line);background:var(--panel);padding:24px;min-height:220px;display:flex;flex-direction:column}.card.featured{background:#f2eee5;color:#090909}.card.featured p,.card.featured .num{color:#666}.num{font-size:10px;letter-spacing:.16em;color:#777;margin-bottom:25px}.card h2{font-size:29px;letter-spacing:-.04em;margin:0 0 10px}.card p{color:#999;line-height:1.5;margin:0 0 24px;flex:1}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #353535;border-radius:999px;padding:10px 13px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#fff;text-decoration:none;cursor:pointer;background:#161616}.btn.primary{background:#f2eee5;color:#080808;border-color:#f2eee5}.featured .btn.primary{background:#090909;color:#fff;border-color:#090909}.btn.disabled{opacity:.35;pointer-events:none}.status{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;color:#777;font-size:12px;line-height:1.6}@media(max-width:720px){.grid{grid-template-columns:1fr}.wrap{padding-top:24px}.top{align-items:flex-start}.card{min-height:190px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top">
-    <div class="logo">DJ BREEZE <span style="color:#777;font-size:11px;letter-spacing:.14em">ADMIN</span></div>
-    <a class="back" href="../">← Website</a>
-  </div>
-
-  <h1>CONTROL<br>THE SITE.</h1>
-  <p class="intro">Detta är första GitHub Pages-adminen. Sajten har ingen egen backend. När den ligger på GitHub Pages öppnar knapparna rätt fil i GitHubs editor. Erik loggar in på GitHub, ändrar, sparar med Commit changes — och sidan uppdateras.</p>
-
-  <div class="grid">
-    <section class="card">
-      <div class="num">01 / HERO</div>
-      <h2>Hero Video</h2>
-      <p>Byt vilken video och posterbild som används i Hero. Videon startar muted och Hero-ljudet styrs separat.</p>
-      <div class="actions"><a class="btn primary edit" data-file="content/site.json">Redigera Hero</a><a class="btn upload" data-folder="assets/video">Ladda upp video</a></div>
-    </section>
-
-    <section class="card">
-      <div class="num">02 / AUDIO</div>
-      <h2>Site Sound</h2>
-      <p>Byt website-mixen, volym och loop-inställning. Ljudet är ett separat system från Hero-videons ljud.</p>
-      <div class="actions"><a class="btn primary edit" data-file="content/site.json">Redigera Sound</a><a class="btn upload" data-folder="assets/audio">Ladda upp MP3</a></div>
-    </section>
-
-    <section class="card">
-      <div class="num">03 / VIDEO LIBRARY</div>
-      <h2>Videos</h2>
-      <p>Här bygger vi vidare med Club, Wedding, Private, Corporate och Event-videos. Första Hero-videon finns redan registrerad.</p>
-      <div class="actions"><a class="btn primary edit" data-file="content/videos.json">Redigera Videos</a><a class="btn upload" data-folder="assets/video">Ladda upp</a></div>
-    </section>
-
-    <section class="card">
-      <div class="num">04 / GIGS</div>
-      <h2>Upcoming Gigs</h2>
-      <p>Lägg datum, venue, stad och biljettlänk i gigs.json. Själva live-renderingen kopplas på i nästa steg.</p>
-      <div class="actions"><a class="btn primary edit" data-file="content/gigs.json">Redigera Gigs</a></div>
-    </section>
-
-    <section class="card">
-      <div class="num">05 / BOOKING</div>
-      <h2>Booking Contacts</h2>
-      <p>Separata kontaktadresser för Club, Wedding, Private Party, Corporate och Public Event.</p>
-      <div class="actions"><a class="btn primary edit" data-file="content/contacts.json">Redigera Kontakter</a></div>
-    </section>
-
-    <section class="card">
-      <div class="num">06 / EPK</div>
-      <h2>EPK & Press</h2>
-      <p>Ladda upp pressbilder, logotyper, PDF-EPK och technical rider. Innehållet kan sedan länkas direkt från sajten.</p>
-      <div class="actions"><a class="btn primary upload" data-folder="assets/epk">Ladda upp EPK</a></div>
-    </section>
-  </div>
-
-  <div class="status" id="status">Kontrollerar GitHub Pages-adressen…</div>
+<div class="top"><div class="logo">DJ BREEZE <span style="color:#777;font-size:11px;letter-spacing:.14em">ADMIN</span></div><a class="back" href="../">← Website</a></div>
+<h1>CONTROL<br>THE SITE.</h1><p class="intro">Bookings har nu en egen inbox. Media och text fortsätter att hanteras via GitHub tills vi bygger fler direkta adminfunktioner.</p>
+<div class="grid">
+<section class="card featured"><div class="num">01 / BOOKING INBOX</div><h2>Bookings</h2><p>Se nya requests, öppna kunduppgifter, acceptera eller avböj, svara via email och skapa en kalenderfil.</p><div class="actions"><a class="btn primary" href="bookings.html">Open Bookings</a><a class="btn edit" data-file="content/contacts.json">Booking Contacts</a></div></section>
+<section class="card"><div class="num">02 / HERO</div><h2>Hero Video</h2><p>Byt vilken video och posterbild som används i Hero.</p><div class="actions"><a class="btn primary edit" data-file="content/site.json">Redigera Hero</a><a class="btn upload" data-folder="assets/video">Ladda upp video</a></div></section>
+<section class="card"><div class="num">03 / AUDIO</div><h2>Site Sound</h2><p>Byt website-mixen, volym och loop-inställning.</p><div class="actions"><a class="btn primary edit" data-file="content/site.json">Redigera Sound</a><a class="btn upload" data-folder="assets/audio">Ladda upp MP3</a></div></section>
+<section class="card"><div class="num">04 / VIDEO LIBRARY</div><h2>Videos</h2><p>Hantera Club, Wedding, Private, Corporate och Event-videos.</p><div class="actions"><a class="btn primary edit" data-file="content/videos.json">Redigera Videos</a><a class="btn upload" data-folder="assets/video">Ladda upp</a></div></section>
+<section class="card"><div class="num">05 / GIGS</div><h2>Upcoming Gigs</h2><p>Lägg datum, venue, stad och biljettlänk.</p><div class="actions"><a class="btn primary edit" data-file="content/gigs.json">Redigera Gigs</a></div></section>
+<section class="card"><div class="num">06 / EPK</div><h2>EPK & Press</h2><p>Ladda upp pressbilder, logotyper, PDF-EPK och technical rider.</p><div class="actions"><a class="btn primary upload" data-folder="assets/epk">Ladda upp EPK</a></div></section>
+</div><div class="status" id="status">Kontrollerar GitHub Pages-adressen…</div>
 </div>
-
-<script>
-(async()=>{
-  let cfg={repository:"",branch:"main"};
-  try{
-    const r=await fetch('../content/admin.json',{cache:'no-store'});
-    if(r.ok) cfg=Object.assign(cfg,await r.json());
-  }catch(e){}
-
-  const status=document.getElementById('status');
-  let repo=cfg.repository;
-  const branch=cfg.branch||'main';
-
-  if(!repo && location.hostname.endsWith('.github.io')){
-    const owner=location.hostname.split('.')[0];
-    const parts=location.pathname.split('/').filter(Boolean);
-    const repoName=parts[0] || `${owner}.github.io`;
-    repo=`${owner}/${repoName}`;
-  }
-
-  if(repo){
-    status.innerHTML=`GitHub repo upptäckt: <strong>${repo}</strong> · branch: <strong>${branch}</strong><br>Du måste vara inloggad på GitHub och ha rätt att redigera repot.`;
-    document.querySelectorAll('.edit').forEach(a=>{
-      a.href=`https://github.com/${repo}/edit/${branch}/${a.dataset.file}`;
-      a.target='_blank'; a.rel='noopener';
-    });
-    document.querySelectorAll('.upload').forEach(a=>{
-      a.href=`https://github.com/${repo}/upload/${branch}/${a.dataset.folder}`;
-      a.target='_blank'; a.rel='noopener';
-    });
-  }else{
-    status.textContent='Lokalt testläge: admin-knapparna aktiveras automatiskt när sajten ligger på username.github.io/repo/.';
-    document.querySelectorAll('.edit,.upload').forEach(a=>a.classList.add('disabled'));
-  }
-})();
-</script>
-</body>
-</html>
+<script>(async()=>{let cfg={repository:'',branch:'main'};try{const r=await fetch('../content/admin.json',{cache:'no-store'});if(r.ok)cfg=Object.assign(cfg,await r.json())}catch(e){}const status=document.getElementById('status');let repo=cfg.repository;const branch=cfg.branch||'main';if(!repo&&location.hostname.endsWith('.github.io')){const owner=location.hostname.split('.')[0];const parts=location.pathname.split('/').filter(Boolean);repo=`${owner}/${parts[0]||owner+'.github.io'}`}if(repo){status.innerHTML=`GitHub repo: <strong>${repo}</strong> · branch: <strong>${branch}</strong>`;document.querySelectorAll('.edit').forEach(a=>{a.href=`https://github.com/${repo}/edit/${branch}/${a.dataset.file}`;a.target='_blank'});document.querySelectorAll('.upload').forEach(a=>{a.href=`https://github.com/${repo}/upload/${branch}/${a.dataset.folder}`;a.target='_blank'})}else{status.textContent='Lokalt testläge.';document.querySelectorAll('.edit,.upload').forEach(a=>a.classList.add('disabled'))}})();</script>
+</body></html>
