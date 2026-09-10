@@ -2,43 +2,45 @@
    Loaded after the main inline styles so mobile has one clear source of truth. */
 
 @media (max-width: 980px){
-  html{scroll-padding-top:112px}
+  html{scroll-padding-top:104px}
   body{overflow-x:hidden}
   .wrap,.nav-inner,.hero-content{width:min(calc(100% - 32px),var(--max)) !important}
   .section{padding:82px 0 !important}
 
-  /* Navigation: intentional two-row mobile header */
+  /* Navigation: compact two-row header with sound control locked to row one. */
   .nav{
     height:auto !important;
-    min-height:86px !important;
-    padding:10px 0 8px !important;
-    background:rgba(7,7,7,.96) !important;
+    min-height:78px !important;
+    padding:9px 0 7px !important;
+    background:rgba(7,7,7,.97) !important;
     border-bottom:1px solid rgba(255,255,255,.08);
   }
   .nav-inner{
     display:grid !important;
     grid-template-columns:minmax(0,1fr) auto !important;
+    grid-template-rows:auto auto !important;
     align-items:center !important;
-    gap:8px 14px !important;
+    gap:6px 14px !important;
   }
-  .brand{font-size:21px !important;white-space:nowrap}
+  .brand{grid-column:1;grid-row:1;font-size:21px !important;white-space:nowrap}
   .brand small{font-size:7px !important}
-  .site-sound-chip{justify-self:end !important;padding:8px 11px !important}
+  .site-sound-chip{grid-column:2 !important;grid-row:1 !important;justify-self:end !important;padding:8px 11px !important}
   .nav-links{
     grid-column:1/-1 !important;
+    grid-row:2 !important;
     display:flex !important;
     width:100% !important;
     gap:22px !important;
     overflow-x:auto !important;
     white-space:nowrap !important;
-    padding:2px 0 1px !important;
+    padding:1px 0 !important;
     scrollbar-width:none;
     font-size:10px !important;
   }
   .nav-links::-webkit-scrollbar{display:none}
   .nav-links a{flex:0 0 auto;opacity:.84 !important}
 
-  /* Shared editorial headers: no cramped two-column text on narrow screens */
+  /* Shared editorial headers */
   .section-head{
     display:grid !important;
     grid-template-columns:1fr !important;
@@ -89,7 +91,7 @@
   #sound .era-copy h3{font-size:30px !important;margin:6px 0 8px !important}
   #sound .era-copy p{font-size:12px !important;line-height:1.4 !important}
 
-  /* Live gallery: substantial, edge-to-edge within the content width */
+  /* Live gallery: strong lead frame with a clean supporting grid. */
   #live .gallery{
     width:100% !important;
     max-width:none !important;
@@ -102,6 +104,7 @@
   #live .tile,#live .tile.tall{
     width:100% !important;max-width:none !important;height:auto !important;min-height:0 !important;
     aspect-ratio:4/3 !important;grid-column:auto !important;grid-row:auto !important;
+    border:1px solid rgba(255,255,255,.08);
   }
   #live .tile.tall:first-child{grid-column:1/-1 !important;aspect-ratio:16/9 !important}
   #live .tile img,#live .tile video{
@@ -110,21 +113,32 @@
   }
   #live .tile:nth-child(2) img,#live .tile:nth-child(5) img{object-fit:contain !important}
   #live .tile .tag{font-size:8px !important;padding:6px 8px !important;left:8px !important;bottom:8px !important}
-  #live.section{padding-bottom:76px !important}
+  #live.section{padding-bottom:70px !important}
 
-  /* Archive: natural poster proportions; no forced tiny boxes */
-  .posters{padding:76px 0 86px !important}
+  /* Archive: uniform editorial cards, full artwork visible, no chaotic masonry. */
+  .posters{padding:70px 0 82px !important}
   .poster-rail{
     width:100% !important;max-width:none !important;margin:0 !important;
     display:grid !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:14px !important;align-items:start !important;
+    gap:12px !important;align-items:stretch !important;
   }
-  .poster{width:100% !important;max-width:none !important;background:transparent !important}
+  .poster{
+    width:100% !important;max-width:none !important;
+    display:flex !important;flex-direction:column !important;
+    background:#0d0d0d !important;
+    border:1px solid rgba(255,255,255,.08) !important;
+    overflow:hidden !important;
+  }
   .poster img,.poster:nth-child(2) img{
     display:block !important;width:100% !important;height:auto !important;max-height:none !important;
-    aspect-ratio:auto !important;object-fit:initial !important;background:transparent !important;transform:none !important;
+    aspect-ratio:4/5 !important;object-fit:contain !important;object-position:center !important;
+    background:#090909 !important;transform:none !important;
   }
-  .poster-cap{display:flex !important;font-size:8px !important;padding:8px 1px !important;line-height:1.25 !important}
+  .poster-cap{
+    display:flex !important;justify-content:space-between !important;align-items:center !important;
+    min-height:28px !important;font-size:8px !important;padding:7px 8px !important;line-height:1.2 !important;
+    border-top:1px solid rgba(255,255,255,.06) !important;
+  }
 
   /* Services + booking */
   .services h2{position:static !important;font-size:clamp(58px,9vw,82px) !important}
@@ -138,30 +152,31 @@
 }
 
 @media (max-width: 640px){
-  html{scroll-padding-top:100px}
+  html{scroll-padding-top:90px}
   .wrap,.nav-inner,.hero-content{width:calc(100% - 24px) !important}
-  .section{padding:64px 0 !important}
+  .section{padding:62px 0 !important}
   .kicker{font-size:9px !important}
 
-  .nav{min-height:82px !important;padding:9px 0 7px !important}
+  .nav{min-height:74px !important;padding:8px 0 6px !important}
+  .nav-inner{gap:5px 10px !important}
   .brand{font-size:18px !important}
   .brand small{display:inline !important;font-size:6px !important;margin-left:6px !important}
-  .site-sound-chip{padding:7px 9px !important;font-size:8px !important}
+  .site-sound-chip{padding:6px 8px !important;font-size:8px !important}
   .site-sound-chip #siteSoundLabel{display:inline !important}
   .nav-links{font-size:9px !important;gap:18px !important}
 
   /* Hero retains the desktop personality, simply recomposed */
   .hero{min-height:100svh !important}
-  .hero-content{padding:122px 0 34px !important}
+  .hero-content{padding:112px 0 34px !important}
   .hero h1{font-size:clamp(72px,23vw,104px) !important;line-height:.76 !important}
   .hero-sub{flex-direction:column !important;align-items:flex-start !important;gap:20px !important;margin-top:22px !important}
   .hero-sub p{font-size:22px !important;max-width:340px !important}
   .hero-actions{justify-content:flex-start !important}
   .hero-actions .btn{min-height:44px !important;padding:0 15px !important;font-size:9px !important}
 
-  .section-head{gap:12px !important;margin-bottom:24px !important}
+  .section-head{gap:11px !important;margin-bottom:22px !important}
   .section-head h2{font-size:48px !important;line-height:.88 !important}
-  .section-head p{font-size:12px !important;max-width:330px !important}
+  .section-head p{font-size:12px !important;max-width:100% !important;color:#aaa !important}
 
   .manifesto h2{font-size:56px !important}
   .manifesto-copy p{font-size:25px !important}
@@ -169,7 +184,7 @@
   .meta-box strong{font-size:23px !important}
   .meta-box span{font-size:8px !important}
 
-  /* Sound becomes compact horizontal editorial cards — no giant stack, no thumbnails. */
+  /* Sound stays as the approved compact editorial treatment. */
   #sound .era-grid{display:grid !important;grid-template-columns:1fr !important;gap:10px !important}
   #sound .era-card{
     display:grid !important;
@@ -194,29 +209,27 @@
   #sound .era-copy h3{font-size:25px !important;line-height:.95 !important;margin:6px 0 8px !important}
   #sound .era-copy p{font-size:11px !important;line-height:1.38 !important;color:#c8c8c8 !important}
 
-  /* Live: one strong lead image, four supporting tiles */
+  /* Live: lead image gets presence, support images stay consistent and intentional. */
   #live .gallery{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:8px !important}
-  #live .tile,#live .tile.tall{aspect-ratio:1/1 !important}
-  #live .tile.tall:first-child{grid-column:1/-1 !important;aspect-ratio:16/9 !important}
+  #live .tile,#live .tile.tall{aspect-ratio:4/3 !important}
+  #live .tile.tall:first-child{grid-column:1/-1 !important;aspect-ratio:16/10 !important}
   #live .tile:nth-child(2) img,#live .tile:nth-child(5) img{object-fit:contain !important}
   #live .tile .tag{font-size:7px !important;padding:5px 7px !important;left:6px !important;bottom:6px !important}
 
-  /* Archive: two-column masonry using the artwork's real dimensions */
-  .posters{padding:64px 0 72px !important}
+  /* Archive: stable 2x2 gallery with one consistent visual rhythm. */
+  .posters{padding:60px 0 68px !important}
   .poster-rail{
-    display:block !important;
-    column-count:2 !important;
-    column-gap:9px !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:8px !important;
+    column-count:initial !important;
   }
-  .poster{
-    display:inline-block !important;
-    width:100% !important;
-    margin:0 0 10px !important;
-    break-inside:avoid !important;
-    vertical-align:top !important;
+  .poster{display:flex !important;margin:0 !important;break-inside:auto !important}
+  .poster img,.poster:nth-child(2) img{
+    width:100% !important;height:auto !important;
+    aspect-ratio:4/5 !important;object-fit:contain !important;
   }
-  .poster img,.poster:nth-child(2) img{width:100% !important;height:auto !important;aspect-ratio:auto !important}
-  .poster-cap{font-size:6.5px !important;padding:5px 1px 2px !important;gap:4px !important}
+  .poster-cap{min-height:24px !important;font-size:6.5px !important;padding:6px !important;gap:4px !important}
 
   .services-grid{gap:28px !important}
   .services h2{font-size:56px !important}
@@ -246,6 +259,7 @@
   #sound .era-copy h3{font-size:23px !important}
   #sound .era-copy p{font-size:10px !important}
   .section-head h2{font-size:44px !important}
+  .poster-cap{font-size:6px !important;padding:5px !important}
   .services h2{font-size:52px !important}
   .booking h2{font-size:55px !important}
 }
