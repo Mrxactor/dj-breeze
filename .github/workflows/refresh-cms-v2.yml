@@ -1,0 +1,36 @@
+name: Refresh CMS v2
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-cms-v2.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump CMS runtime and enable admin hash tabs
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('js/cms-runtime.js?v=20260910-1','js/cms-runtime.js?v=20260910-2')
+          p.write_text(s,encoding='utf-8')
+          c=Path('admin/cms.html')
+          t=c.read_text(encoding='utf-8')
+          marker='</script></body></html>'
+          addon=""";window.addEventListener('load',()=>{const k=location.hash.slice(1);if(!k)return;const b=document.querySelector('.tab[data-tab=\"'+k+'\"]');if(b)b.click()})"""
+          if addon not in t:
+              t=t.replace(marker,addon+marker)
+          c.write_text(t,encoding='utf-8')
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html admin/cms.html
+          git commit -m "Activate Supabase CMS v2 runtime [skip ci]"
+          git push
