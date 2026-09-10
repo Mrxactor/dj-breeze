@@ -115,6 +115,8 @@
     const root=document.querySelector('main')||document.body;
     let queued=false;
     new MutationObserver(()=>{if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;applyDynamic();applyFooterPrivacy()})}).observe(root,{childList:true,subtree:true});
+    const footer=document.querySelector('footer');
+    if(footer)new MutationObserver(()=>applyFooterPrivacy()).observe(footer,{childList:true,subtree:true});
   }
 
   function applySeo(){
@@ -126,11 +128,14 @@
 
   function applyFooterPrivacy(){
     const f=blocks.footer||{},right=document.querySelector('.footer-right');
-    if(right&&(f.line1||f.line2)){
+    if(!right)return;
+    const hasAdmin=!!right.querySelector('a[href^="admin"],a[href*="/admin/"]');
+    if((f.line1||f.line2)&&(hasAdmin||right.dataset.publicClean!=='1')){
       right.replaceChildren();
       if(f.line1){right.append(document.createTextNode(f.line1));right.append(document.createElement('br'))}
       if(f.line2)right.append(document.createTextNode(f.line2));
+      right.dataset.publicClean='1';
     }
-    document.querySelectorAll('footer a[href^="admin"],footer a[href*="/admin/"]').forEach(a=>a.remove());
+    right.querySelectorAll('a[href^="admin"],a[href*="/admin/"]').forEach(a=>a.remove());
   }
 })();
