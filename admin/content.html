@@ -1,23 +1,98 @@
-<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DJ Breeze Admin — Content</title><style>:root{--bg:#080808;--p:#111;--p2:#171717;--t:#f4f1e9;--m:#999;--l:#292929;--ok:#9be6aa}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.w{width:min(calc(100% - 28px),1180px);margin:auto;padding:28px 0 80px}.top,.hero,.tabs,.actions{display:flex;gap:12px;align-items:center}.top{justify-content:space-between;margin-bottom:30px}.brand{font-size:25px;font-weight:950;letter-spacing:-.05em}.brand small{font-size:10px;letter-spacing:.15em;color:#777;margin-left:8px}.back{color:#aaa;text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}.hero{justify-content:space-between;align-items:end;margin-bottom:24px}.hero h1{font-size:clamp(44px,7vw,86px);line-height:.88;letter-spacing:-.065em;margin:0}.hero p{max-width:560px;color:#999;line-height:1.55;margin:0}.box{border:1px solid var(--l);background:var(--p);padding:20px}.login{width:min(100%,520px)}.hidden{display:none!important}.tabs{flex-wrap:wrap;margin:22px 0}.tab,.btn{border:1px solid #343434;background:#151515;color:#fff;border-radius:999px;padding:10px 13px;font-size:10px;text-transform:uppercase;letter-spacing:.11em;cursor:pointer;text-decoration:none}.tab.active,.btn.primary{background:#f2eee5;color:#090909;border-color:#f2eee5}.section{display:none}.section.active{display:block}.section h2{font-size:34px;letter-spacing:-.04em;margin:0 0 8px}.lead,.status{font-size:12px;color:#999;line-height:1.55}.lead{font-size:14px;margin:0 0 18px}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888}.field input,.field textarea{width:100%;border:1px solid #333;background:#0d0d0d;color:#fff;padding:12px;border-radius:9px;font:inherit}.field textarea{min-height:90px;resize:vertical}.group{grid-column:1/-1;background:var(--p2);border:1px solid #242424;padding:14px}.group h3{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.11em;color:#aaa}.status.ok{color:var(--ok)}@media(max-width:760px){.hero{display:block}.hero p{margin-top:14px}.form{grid-template-columns:1fr}.field.full,.group{grid-column:auto}}</style></head><body><div class="w"><div class="top"><div class="brand">DJ BREEZE <small>ADMIN / CONTENT</small></div><a class="back" href="./">← Admin</a></div><div class="hero"><h1>EDIT THE<br>WEBSITE.</h1><p>Vanliga formulär i stället för HTML eller GitHub. Ändringar sparas direkt i Supabase och läses av hemsidan.</p></div><div id="setup" class="box hidden">Backend är inte kopplad.</div><div id="login" class="box login hidden"><h2>Admin login</h2><form id="loginForm" class="form"><div class="field full"><label>Email</label><input id="email" type="email" required></div><div class="field full"><label>Password</label><input id="password" type="password" required></div><div><button class="btn primary">Log in</button></div><div id="loginStatus" class="status"></div></form></div><div id="app" class="hidden"><div class="tabs" id="tabs"></div><div id="sections"></div></div></div><script>
-let cfg=null,token=sessionStorage.getItem('dj_breeze_admin_token')||'',blocks={};const $=s=>document.querySelector(s),base=()=>cfg.url.replace(/\/$/,'');
-const definitions={
- manifesto:{label:'Point of view',lead:'Huvudbudskapet på den ljusa sektionen.',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['lead','Lead','textarea'],['body','Body','textarea']],groups:[{key:'meta',title:'Three highlights',count:3,fields:[['value','Value'],['label','Label']]}]},
- sound:{label:'The Sound',lead:'Rubriker och de tre musik-erorna.',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']],groups:[{key:'cards',title:'Sound cards',count:3,fields:[['num','Small label'],['title','Title'],['body','Text','textarea']]}]},
- live:{label:'Live',lead:'Rubriken ovanför livegalleriet.',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']]},
- archive:{label:'Archive',lead:'Rubriken ovanför flyerarkivet.',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']]},
- services:{label:'Booking types',lead:'Texten för de fem bokningstyperna.',fields:[['kicker','Kicker'],['heading','Heading','textarea']],groups:[{key:'items',title:'Booking rows',count:5,fields:[['title','Title'],['tag','Tag']]}]},
- booking:{label:'Booking CTA',lead:'Texten ovanför bokningsformuläret.',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']]},
- footer:{label:'Footer',lead:'Text längst ner på hemsidan.',fields:[['handle','Handle'],['line1','Line 1'],['line2','Line 2']]},
- navigation:{label:'Navigation',lead:'Namnen i toppmenyn.',fields:[['sound','Sound'],['live','Live'],['events','Events'],['booking','Booking']]}
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DJ Breeze Admin — Website Text</title>
+<style>
+:root{--bg:#080808;--p:#111;--p2:#171717;--t:#f4f1e9;--m:#999;--l:#292929;--ok:#9be6aa;--bad:#ff9d9d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.w{width:min(calc(100% - 28px),1180px);margin:auto;padding:28px 0 80px}.top,.hero,.tabs,.actions{display:flex;gap:12px;align-items:center}.top{justify-content:space-between;margin-bottom:30px}.brand{font-size:25px;font-weight:950;letter-spacing:-.05em}.brand small{font-size:10px;letter-spacing:.15em;color:#777;margin-left:8px}.back{color:#aaa;text-decoration:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}.hero{justify-content:space-between;align-items:end;margin-bottom:24px}.hero h1{font-size:clamp(44px,7vw,86px);line-height:.88;letter-spacing:-.065em;margin:0}.hero p{max-width:580px;color:#999;line-height:1.55;margin:0}.box{border:1px solid var(--l);background:var(--p);padding:20px}.login{width:min(100%,520px)}.hidden{display:none!important}.tabs{flex-wrap:wrap;margin:22px 0;position:sticky;top:0;background:rgba(8,8,8,.96);backdrop-filter:blur(10px);z-index:5;padding:12px 0}.tab,.btn{border:1px solid #343434;background:#151515;color:#fff;border-radius:999px;padding:10px 13px;font-size:10px;text-transform:uppercase;letter-spacing:.11em;cursor:pointer;text-decoration:none}.tab.active,.btn.primary{background:#f2eee5;color:#090909;border-color:#f2eee5}.section{display:none}.section.active{display:block}.section h2{font-size:34px;letter-spacing:-.04em;margin:0 0 8px}.lead,.status{font-size:12px;color:#999;line-height:1.55}.lead{font-size:14px;margin:0 0 18px}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label,.group-title{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#888}.field input,.field textarea{width:100%;border:1px solid #333;background:#0d0d0d;color:#fff;padding:12px;border-radius:9px;font:inherit}.field textarea{min-height:90px;resize:vertical}.group{grid-column:1/-1;background:var(--p2);border:1px solid #242424;padding:14px}.group-title{margin:0 0 12px;color:#aaa}.group .form{grid-template-columns:repeat(2,1fr)}.savebar{grid-column:1/-1;display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px}.status.ok{color:var(--ok)}.status.bad{color:var(--bad)}@media(max-width:760px){.hero{display:block}.hero p{margin-top:14px}.form,.group .form{grid-template-columns:1fr}.field.full,.group,.savebar{grid-column:auto}.tabs{top:0;overflow-x:auto;flex-wrap:nowrap}.tab{flex:0 0 auto}}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="top"><div class="brand">DJ BREEZE <small>ADMIN / WEBSITE TEXT</small></div><a class="back" href="./">← Admin</a></div>
+  <div class="hero"><h1>CONTROL<br>THE WORDS.</h1><p>All publik text som Erik normalt ska kunna ändra samlas här. Spara en sektion och hemsidan läser ändringen direkt från Supabase — utan GitHub.</p></div>
+  <div id="setup" class="box hidden">Backend är inte kopplad.</div>
+  <div id="login" class="box login hidden"><h2>Admin login</h2><form id="loginForm" class="form"><div class="field full"><label>Email</label><input id="email" type="email" required></div><div class="field full"><label>Password</label><input id="password" type="password" required></div><div><button class="btn primary">Log in</button></div><div id="loginStatus" class="status"></div></form></div>
+  <div id="app" class="hidden"><div class="tabs" id="tabs"></div><div id="sections"></div></div>
+</div>
+<script>
+let cfg=null,token=sessionStorage.getItem('dj_breeze_admin_token')||'',site={},blocks={};
+const $=s=>document.querySelector(s),base=()=>cfg.url.replace(/\/$/,'');
+const TYPES=['club','wedding','private','corporate','public'];
+const defs={
+  hero:{label:'Hero',lead:'Browser title, artistnamn, Hero-text, knappar och Site Sound-labels.',siteFields:[['page_title','Browser title'],['artist_name','Artist name'],['hero_kicker','Hero kicker'],['hero_copy','Hero copy','textarea']],block:'hero',fields:[['primary_cta','Primary CTA'],['secondary_cta','Secondary CTA'],['site_sound_on','Site Sound — on'],['site_sound_off','Site Sound — off']]},
+  seo:{label:'SEO',lead:'Texten sökmotorer och delningar kan använda som beskrivning.',block:'seo',fields:[['description','Meta description','textarea']]},
+  marquee:{label:'Marquee',lead:'Den rullande raden under Hero.',block:'marquee',arrays:[{key:'items',title:'Marquee items',count:5,label:'Item'}]},
+  manifesto:{label:'Point of view',lead:'Den ljusa huvudsektionen och dess tre highlights.',block:'manifesto',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['lead','Lead','textarea'],['body','Body','textarea']],groups:[{key:'meta',title:'Highlights',count:3,fields:[['value','Value'],['label','Label']]}]},
+  sound:{label:'The Sound',lead:'Rubrikerna och de tre musik-erorna.',block:'sound',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']],groups:[{key:'cards',title:'Sound cards',count:3,fields:[['num','Small label'],['title','Title'],['body','Text','textarea']]}]},
+  live:{label:'Live',lead:'Rubrik, intro och fallback-labels på livebilder.',block:'live',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']],arrays:[{key:'tags',title:'Live image labels',count:5,label:'Label'}]},
+  archive:{label:'Archive',lead:'Rubrik, intro och fallback-texter för flyerarkivet.',block:'archive',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']],groups:[{key:'captions',title:'Archive captions',count:4,fields:[['title','Title'],['label','Label']]}]},
+  services:{label:'Booking types',lead:'De fem eventtyperna som visas på sajten.',block:'services',fields:[['kicker','Kicker'],['heading','Heading','textarea']],groups:[{key:'items',title:'Booking rows',count:5,fields:[['title','Title'],['short','Short chip label'],['tag','Tag']]}]},
+  booking:{label:'Booking CTA',lead:'Texten ovanför booking-formuläret.',block:'booking',fields:[['kicker','Kicker'],['heading','Heading','textarea'],['intro','Intro','textarea']]},
+  booking_form:{label:'Booking form',lead:'Labels, placeholders, eventnamn och knappar i formuläret.',block:'booking_form',fields:[['start_button','Start button'],['submit_button','Submit button'],['copy_button','Copy button'],['labels.type','Label — Event type'],['labels.date','Label — Date'],['labels.venue','Label — Venue / City'],['labels.name','Label — Your name'],['labels.email','Label — Email'],['labels.phone','Label — Phone'],['labels.details','Label — Details'],['placeholders.venue','Placeholder — Venue'],['placeholders.name','Placeholder — Name'],['placeholders.email','Placeholder — Email'],['placeholders.phone','Placeholder — Phone'],['placeholders.details','Placeholder — Details','textarea'],['options.club','Option — Club'],['options.wedding','Option — Wedding'],['options.private','Option — Private'],['options.corporate','Option — Corporate'],['options.public','Option — Public']]},
+  dynamic_sections:{label:'Gigs & Video',lead:'Rubriker och standardtexter för dynamiska Gigs- och Video-sektioner.',block:'dynamic_sections',fields:[['videos_kicker','Videos kicker'],['videos_heading','Videos heading','textarea'],['videos_intro','Videos intro','textarea'],['gigs_kicker','Gigs kicker'],['gigs_heading','Gigs heading','textarea'],['gigs_intro','Gigs intro','textarea'],['past_heading','Past events heading'],['no_upcoming','No upcoming gigs'],['ticket_label','Ticket link label'],['info_label','Info soon label']]},
+  navigation:{label:'Navigation',lead:'Namnen i toppmenyn.',block:'navigation',fields:[['sound','Sound'],['live','Live'],['events','Events'],['booking','Booking']]},
+  footer:{label:'Footer',lead:'Publik text längst ner. Adminlänken visas inte för besökare.',block:'footer',fields:[['handle','Handle'],['line1','Line 1'],['line2','Line 2']]}
 };
-async function api(path,o={}){const h=Object.assign({apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},o.headers||{}),r=await fetch(base()+path,Object.assign({},o,{headers:h}));if(r.status===401){sessionStorage.removeItem('dj_breeze_admin_token');location.reload();throw Error('Session expired')}if(!r.ok)throw Error(await r.text());const t=await r.text();return t?JSON.parse(t):null}
-async function init(){try{const r=await fetch('../content/backend.json',{cache:'no-store'});if(r.ok)cfg=await r.json()}catch(e){}if(!cfg||!cfg.enabled){$('#setup').classList.remove('hidden');return}if(token){$('#app').classList.remove('hidden');await load()}else $('#login').classList.remove('hidden')}
-$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();const st=$('#loginStatus');st.textContent='Logging in…';try{const r=await fetch(base()+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:cfg.anonKey,'Content-Type':'application/json'},body:JSON.stringify({email:$('#email').value.trim(),password:$('#password').value})}),d=await r.json();if(!r.ok||!d.access_token)throw Error(d.error_description||d.msg||'Login failed');token=d.access_token;sessionStorage.setItem('dj_breeze_admin_token',token);$('#login').classList.add('hidden');$('#app').classList.remove('hidden');await load()}catch(x){st.textContent=x.message}});
-async function load(){const rows=await api('/rest/v1/content_blocks?select=*&order=key');rows.forEach(r=>blocks[r.key]=r.data||{});render()}
-function render(){const tabs=$('#tabs'),sections=$('#sections');tabs.innerHTML='';sections.innerHTML='';Object.entries(definitions).forEach(([key,d],i)=>{const b=document.createElement('button');b.className='tab'+(i===0?' active':'');b.textContent=d.label;b.onclick=()=>activate(key);b.dataset.key=key;tabs.appendChild(b);const sec=document.createElement('section');sec.id='sec-'+key;sec.className='section'+(i===0?' active':'');sec.innerHTML=sectionHtml(key,d,blocks[key]||{});sections.appendChild(sec);sec.querySelector('form').addEventListener('submit',e=>save(e,key,d))})}
-function inputHtml(id,label,type,val){const v=String(val??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');return `<div class="field${type==='textarea'?' full':''}"><label for="${id}">${label}</label>${type==='textarea'?`<textarea id="${id}">${v}</textarea>`:`<input id="${id}" value="${v}">`}</div>`}
-function sectionHtml(key,d,data){let h=`<div class="box"><h2>${d.label}</h2><p class="lead">${d.lead}</p><form class="form">`;d.fields.forEach(f=>h+=inputHtml(`${key}-${f[0]}`,f[1],f[2],data[f[0]]));(d.groups||[]).forEach(g=>{h+=`<div class="group"><h3>${g.title}</h3><div class="form">`;for(let i=0;i<g.count;i++){const row=(data[g.key]||[])[i]||{};g.fields.forEach(f=>h+=inputHtml(`${key}-${g.key}-${i}-${f[0]}`,`${i+1}. ${f[1]}`,f[2],row[f[0]]))}h+='</div></div>'});h+=`<div class="field full"><div class="actions"><button class="btn primary">Save ${d.label}</button></div><div class="status" id="status-${key}"></div></div></form></div>`;return h}
-function activate(key){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.key===key));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id==='sec-'+key));history.replaceState(null,'','#'+key)}
-async function save(e,key,d){e.preventDefault();const data={};d.fields.forEach(f=>data[f[0]]=$(`#${key}-${f[0]}`).value);(d.groups||[]).forEach(g=>{data[g.key]=[];for(let i=0;i<g.count;i++){const row={};g.fields.forEach(f=>row[f[0]]=$(`#${key}-${g.key}-${i}-${f[0]}`).value);if(key==='services'){row.type=['club','wedding','private','corporate','public'][i]}data[g.key].push(row)}});const st=$('#status-'+key);st.textContent='Saving…';try{await api('/rest/v1/content_blocks?key=eq.'+encodeURIComponent(key),{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify({data})});blocks[key]=data;st.textContent='Saved. Website will use this content immediately.';st.classList.add('ok')}catch(err){st.textContent=err.message;st.classList.remove('ok')}}
-init().then(()=>{const k=location.hash.slice(1);if(k&&definitions[k])activate(k)});
-</script></body></html>
+
+async function api(path,o={}){
+  const h=Object.assign({apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},o.headers||{});
+  const r=await fetch(base()+path,Object.assign({},o,{headers:h}));
+  if(r.status===401){sessionStorage.removeItem('dj_breeze_admin_token');location.reload();throw Error('Session expired')}
+  if(!r.ok)throw Error(await r.text());const t=await r.text();return t?JSON.parse(t):null;
+}
+async function init(){
+  try{const r=await fetch('../content/backend.json',{cache:'no-store'});if(r.ok)cfg=await r.json()}catch(e){}
+  if(!cfg||!cfg.enabled){$('#setup').classList.remove('hidden');return}
+  if(token){$('#app').classList.remove('hidden');await load()}else $('#login').classList.remove('hidden');
+}
+$('#loginForm').addEventListener('submit',async e=>{
+  e.preventDefault();const st=$('#loginStatus');st.textContent='Logging in…';
+  try{const r=await fetch(base()+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:cfg.anonKey,'Content-Type':'application/json'},body:JSON.stringify({email:$('#email').value.trim(),password:$('#password').value})}),d=await r.json();if(!r.ok||!d.access_token)throw Error(d.error_description||d.msg||'Login failed');token=d.access_token;sessionStorage.setItem('dj_breeze_admin_token',token);$('#login').classList.add('hidden');$('#app').classList.remove('hidden');await load()}catch(x){st.textContent=x.message}
+});
+async function load(){
+  const [rows,s]=await Promise.all([api('/rest/v1/content_blocks?select=*&order=key'),api('/rest/v1/site_settings?id=eq.1&select=*')]);
+  blocks={};(rows||[]).forEach(r=>blocks[r.key]=r.data||{});site=(s&&s[0])||{};render();
+}
+function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function getPath(obj,path){return path.split('.').reduce((o,k)=>o&&o[k]!=null?o[k]:'',obj)}
+function setPath(obj,path,val){const keys=path.split('.');let cur=obj;keys.slice(0,-1).forEach(k=>{if(!cur[k]||typeof cur[k]!=='object'||Array.isArray(cur[k]))cur[k]={};cur=cur[k]});cur[keys.at(-1)]=val}
+function clone(v){return JSON.parse(JSON.stringify(v||{}))}
+function idFor(section,path,extra=''){return (section+'__'+path+'__'+extra).replace(/[^a-zA-Z0-9_-]/g,'_')}
+function input(section,path,label,type,val,extra=''){
+  const id=idFor(section,path,extra),full=type==='textarea'?' full':'';
+  return `<div class="field${full}"><label for="${id}">${esc(label)}</label>${type==='textarea'?`<textarea id="${id}">${esc(val)}</textarea>`:`<input id="${id}" value="${esc(val)}">`}</div>`;
+}
+function sectionHtml(key,d){
+  const data=blocks[d.block]||{};let h=`<section id="sec-${key}" class="section"><div class="box"><h2>${esc(d.label)}</h2><p class="lead">${esc(d.lead)}</p><form class="form" data-key="${key}">`;
+  (d.siteFields||[]).forEach(f=>h+=input(key,'site.'+f[0],f[1],f[2],site[f[0]]));
+  (d.fields||[]).forEach(f=>h+=input(key,f[0],f[1],f[2],getPath(data,f[0])));
+  (d.arrays||[]).forEach(a=>{h+=`<div class="group"><div class="group-title">${esc(a.title)}</div><div class="form">`;for(let i=0;i<a.count;i++){const arr=data[a.key]||[];h+=input(key,a.key,`${i+1}. ${a.label}`,'text',arr[i]??'',String(i))}h+='</div></div>'});
+  (d.groups||[]).forEach(g=>{h+=`<div class="group"><div class="group-title">${esc(g.title)}</div><div class="form">`;for(let i=0;i<g.count;i++){const row=(data[g.key]||[])[i]||{};g.fields.forEach(f=>h+=input(key,g.key+'.'+f[0],`${i+1}. ${f[1]}`,f[2],row[f[0]],String(i)))}h+='</div></div>'});
+  h+=`<div class="savebar"><button class="btn primary">Save ${esc(d.label)}</button><div class="status" id="status-${key}"></div></div></form></div></section>`;return h;
+}
+function render(){
+  const tabs=$('#tabs'),sections=$('#sections');tabs.innerHTML='';sections.innerHTML='';
+  Object.entries(defs).forEach(([key,d],i)=>{
+    const b=document.createElement('button');b.className='tab'+(i===0?' active':'');b.textContent=d.label;b.dataset.key=key;b.onclick=()=>activate(key);tabs.appendChild(b);
+    sections.insertAdjacentHTML('beforeend',sectionHtml(key,d));
+  });
+  document.querySelectorAll('form[data-key]').forEach(f=>f.addEventListener('submit',save));
+  const wanted=location.hash.slice(1);activate(defs[wanted]?wanted:Object.keys(defs)[0],false);
+}
+function activate(key,write=true){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.key===key));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id==='sec-'+key));if(write)history.replaceState(null,'','#'+key);
+}
+async function save(e){
+  e.preventDefault();const key=e.currentTarget.dataset.key,d=defs[key],st=$('#status-'+key);st.textContent='Saving…';st.className='status';
+  try{
+    if(d.siteFields&&d.siteFields.length){const patch={};d.siteFields.forEach(f=>{patch[f[0]]=$('#'+idFor(key,'site.'+f[0])).value});await api('/rest/v1/site_settings?id=eq.1',{method:'PATCH',headers:{Prefer:'return=minimal'},body:JSON.stringify(patch)});Object.assign(site,patch)}
+    if(d.block){const data=clone(blocks[d.block]);(d.fields||[]).forEach(f=>setPath(data,f[0],$('#'+idFor(key,f[0])).value));(d.arrays||[]).forEach(a=>{data[a.key]=[];for(let i=0;i<a.count;i++)data[a.key].push($('#'+idFor(key,a.key,String(i))).value)});(d.groups||[]).forEach(g=>{data[g.key]=[];for(let i=0;i<g.count;i++){const row={};g.fields.forEach(f=>row[f[0]]=$('#'+idFor(key,g.key+'.'+f[0],String(i))).value);if(d.block==='services')row.type=TYPES[i];data[g.key].push(row)}});await api('/rest/v1/content_blocks?on_conflict=key',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify([{key:d.block,data}])});blocks[d.block]=data}
+    st.textContent='Saved. The public website now uses this text.';st.className='status ok';
+  }catch(err){st.textContent=err.message;st.className='status bad'}
+}
+init();
+</script>
+</body>
+</html>
