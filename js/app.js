@@ -209,7 +209,7 @@ async function saveBookingToAdmin(data) {
       'apikey': backendConfig.anonKey,
       'Authorization': 'Bearer ' + backendConfig.anonKey,
       'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
+      'Prefer': 'return=minimal'
     },
     body: JSON.stringify(payload)
   });
