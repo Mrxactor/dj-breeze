@@ -314,6 +314,78 @@
     .poster-cap{display:flex !important;flex-direction:column;gap:3px;padding:8px 2px;font-size:8px;line-height:1.35}
   }
 
+
+  /* Mobile media fit: preserve full artwork and photos. */
+  @media (max-width:820px){
+    /* Sound cards: show the full artwork first, then the copy below it. */
+    #sound .era-card{
+      min-height:0 !important;
+      height:auto !important;
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    #sound .era-card img{
+      position:relative !important;
+      inset:auto !important;
+      width:100% !important;
+      height:auto !important;
+      max-height:none !important;
+      object-fit:contain !important;
+      background:#111;
+      transform:none !important;
+    }
+    #sound .era-card::after{display:none !important}
+    #sound .era-copy{
+      position:relative !important;
+      left:auto !important;right:auto !important;bottom:auto !important;
+      padding:18px 18px 20px;
+      background:#111;
+    }
+
+    /* Live gallery: consistent frames, no oversized crops. */
+    #live .gallery{
+      grid-template-columns:1fr !important;
+      grid-template-rows:none !important;
+      gap:10px;
+    }
+    #live .tile,#live .tile.tall{
+      width:100%;
+      height:auto !important;
+      aspect-ratio:4/3;
+      grid-column:auto !important;
+      grid-row:auto !important;
+      background:#0d0d0d;
+    }
+    #live .tile img,#live .tile video{
+      width:100% !important;
+      height:100% !important;
+      object-fit:contain !important;
+      object-position:center center !important;
+      background:#0d0d0d;
+      transform:none !important;
+    }
+
+    /* Flyer archive: same frame for every flyer, full artwork visible. */
+    .poster-rail{align-items:stretch}
+    .poster img,.poster:nth-child(2) img{
+      width:100%;
+      aspect-ratio:3/4 !important;
+      height:auto !important;
+      object-fit:contain !important;
+      object-position:center center !important;
+      background:#0e0e0e;
+      transform:none !important;
+    }
+  }
+
+  @media (max-width:640px){
+    #sound .era-copy h3{font-size:34px}
+    #sound .era-copy p{font-size:14px;line-height:1.45}
+    #live .tile,#live .tile.tall{aspect-ratio:4/3}
+    .poster-rail{grid-template-columns:1fr 1fr}
+  }
+
 </style>
 </head>
 <body>
