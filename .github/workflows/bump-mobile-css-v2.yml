@@ -1,0 +1,29 @@
+name: Bump mobile stylesheet cache
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bump-mobile-css-v2.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump mobile stylesheet version
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('css/mobile-premium.css?v=20260910-1','css/mobile-premium.css?v=20260910-2')
+          p.write_text(s,encoding='utf-8')
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Bump mobile stylesheet cache version [skip ci]"
+          git push
