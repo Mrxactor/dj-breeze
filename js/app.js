@@ -7,7 +7,9 @@ const siteSoundToggle = document.getElementById('siteSoundToggle');
 const siteSoundLabel = document.getElementById('siteSoundLabel');
 let siteSoundWanted = true;
 let contactConfig = null;
+let backendConfig = null;
 
+/* Reveal animation. If IntersectionObserver is unavailable, show everything. */
 if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -85,6 +87,7 @@ if (heroSoundToggle) {
   });
 }
 
+/* Booking links are real #anchors. JS only enhances them by pre-selecting the type. */
 const bookingTypeSelect = document.getElementById('bookingType');
 const bookingLinks = document.querySelectorAll('.booking-type-link');
 bookingLinks.forEach(link => {
@@ -147,6 +150,12 @@ ${message || '-'}`;
 
   return {
     type,
+    date,
+    venue,
+    name,
+    email,
+    phone,
+    message,
     subject: `DJ Breeze Booking — ${label}${date ? ' — ' + date : ''}`,
     body
   };
@@ -164,21 +173,101 @@ async function copyText(text, statusEl) {
     await navigator.clipboard.writeText(text);
     if (statusEl) statusEl.textContent = 'Booking request copied.';
   } catch (_) {
-    if (statusEl) statusEl.textContent = 'Copy failed. You can still use Prepare booking request.';
+    if (statusEl) statusEl.textContent = 'Copy failed. You can still use Send booking request.';
   }
+}
+
+function backendReady() {
+  return !!(
+    backendConfig &&
+    backendConfig.enabled &&
+    backendConfig.provider === 'supabase' &&
+    backendConfig.url &&
+    backendConfig.anonKey
+  );
+}
+
+async function saveBookingToAdmin(data) {
+  if (!backendReady()) return { ok: false, reason: 'not-configured' };
+
+  const base = backendConfig.url.replace(/\/$/, '');
+  const payload = {
+    event_type: data.type,
+    event_date: data.date || null,
+    venue: data.venue,
+    customer_name: data.name,
+    customer_email: data.email,
+    customer_phone: data.phone || null,
+    message: data.message || null,
+    status: 'pending',
+    source: 'website'
+  };
+
+  const response = await fetch(base + '/rest/v1/bookings', {
+    method: 'POST',
+    headers: {
+      'apikey': backendConfig.anonKey,
+      'Authorization': 'Bearer ' + backendConfig.anonKey,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => '');
+    throw new Error(text || ('Booking save failed: ' + response.status));
+  }
+
+  const rows = await response.json().catch(() => []);
+  return { ok: true, booking: Array.isArray(rows) ? rows[0] : rows };
 }
 
 const bookingForm = document.getElementById('bookingForm');
 if (bookingForm) {
-  bookingForm.addEventListener('submit', event => {
+  bookingForm.addEventListener('submit', async event => {
     event.preventDefault();
     const data = buildBookingRequest(true);
     if (!data) return;
-    const status = document.getElementById('bookingStatus');
-    const destination = getBookingEmail(data.type);
 
+    const status = document.getElementById('bookingStatus');
+    const submit = bookingForm.querySelector('button[type="submit"]');
+    const originalText = submit ? submit.textContent : '';
+
+    if (backendReady()) {
+      try {
+        if (submit) {
+          submit.disabled = true;
+          submit.textContent = 'Sending…';
+        }
+        if (status) status.textContent = 'Sending your booking request…';
+
+        const result = await saveBookingToAdmin(data);
+        if (result.ok) {
+          const id = result.booking && result.booking.id ? String(result.booking.id).slice(0, 8).toUpperCase() : '';
+          if (status) status.textContent = id
+            ? 'Request sent. Booking reference: ' + id
+            : 'Request sent. DJ Breeze will get back to you soon.';
+          bookingForm.reset();
+          document.querySelectorAll('#booking .chips a').forEach(chip => chip.classList.remove('active'));
+          return;
+        }
+      } catch (err) {
+        console.error(err);
+        if (status) status.textContent = 'Could not send the request right now. Use Copy request and contact DJ Breeze directly.';
+      } finally {
+        if (submit) {
+          submit.disabled = false;
+          submit.textContent = originalText;
+        }
+      }
+      return;
+    }
+
+    // Temporary fallback until Supabase is connected.
+    const destination = getBookingEmail(data.type);
     if (!destination || destination.indexOf('example.com') !== -1) {
-      if (status) status.textContent = 'Booking form works. A real booking email still needs to be added in Admin → Booking Contacts.';
+      if (status) status.textContent = 'Admin bookings is built but the database is not connected yet. The request has been copied instead.';
       copyText(data.body, status);
       return;
     }
@@ -230,6 +319,9 @@ async function loadSiteConfig() {
 
     const contactsRes = await fetch('content/contacts.json', { cache: 'no-store' });
     if (contactsRes.ok) contactConfig = await contactsRes.json();
+
+    const backendRes = await fetch('content/backend.json', { cache: 'no-store' });
+    if (backendRes.ok) backendConfig = await backendRes.json();
   } catch (_) {}
 }
 loadSiteConfig();
