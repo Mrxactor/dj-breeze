@@ -1,0 +1,13 @@
+{
+  "_note": "Hero kan bytas i site.json. Här kommer framtida Video Library att ligga.",
+  "videos": [
+    {
+      "id": "hero-01",
+      "title": "Current Hero",
+      "category": "hero",
+      "src": "assets/video/hero.mp4",
+      "poster": "assets/images/hero-poster.jpg",
+      "featured": true
+    }
+  ]
+}

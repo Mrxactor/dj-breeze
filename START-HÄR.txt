@@ -1,0 +1,9 @@
+DJ BREEZE — GITHUB PAGES TEST
+
+1. Skapa ett publikt GitHub-repo, t.ex. dj-breeze.
+2. Ladda upp ALLT innehåll i denna mapp till repot.
+3. GitHub → Settings → Pages → Deploy from a branch → main → /(root).
+4. Öppna din github.io-länk.
+5. Lägg till /admin/ på slutet för adminpanelen.
+
+Detaljer finns i README.md.

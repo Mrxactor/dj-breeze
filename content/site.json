@@ -1,0 +1,20 @@
+{
+  "pageTitle": "DJ Breeze — Official",
+  "artistName": "DJ BREEZE",
+  "hero": {
+    "video": "assets/video/hero.mp4",
+    "poster": "assets/images/hero-poster.jpg",
+    "autoplay": true,
+    "muted": true,
+    "loop": true
+  },
+  "siteSound": {
+    "enabled": true,
+    "track": "assets/audio/website-mix.mp3",
+    "volume": 0.55,
+    "loop": true
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/djbreezeofficial/reels/"
+  }
+}

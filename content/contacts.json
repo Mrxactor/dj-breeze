@@ -1,0 +1,27 @@
+{
+  "_note": "Byt placeholder-adresserna när riktiga bokningsadresser är klara.",
+  "default": {
+    "label": "General Booking",
+    "email": "booking@example.com"
+  },
+  "club": {
+    "label": "Club / Nightlife",
+    "email": "booking@example.com"
+  },
+  "wedding": {
+    "label": "Wedding",
+    "email": "booking@example.com"
+  },
+  "private": {
+    "label": "Private Party",
+    "email": "booking@example.com"
+  },
+  "corporate": {
+    "label": "Corporate Event",
+    "email": "booking@example.com"
+  },
+  "public": {
+    "label": "Public Event / Festival",
+    "email": "booking@example.com"
+  }
+}
