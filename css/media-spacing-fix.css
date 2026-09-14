@@ -1,0 +1,100 @@
+/* DJ Breeze media spacing / crop fixes — 2026-09-14 */
+
+/* LIVE / GALLERY
+   Most of these assets contain typography/artwork inside the image itself.
+   Keep the whole artwork visible instead of cropping the edges with cover. */
+.gallery-card{
+  background:#0d0d0c !important;
+  border:1px solid rgba(255,255,255,.10);
+  padding:10px;
+}
+.gallery-card img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  display:block;
+  transform:none !important;
+}
+/* The first/featured card is the artist portrait, where a photographic crop still works best. */
+.gallery-card.featured img{
+  object-fit:cover !important;
+  object-position:center top !important;
+}
+.gallery-card:hover img{
+  transform:none !important;
+}
+.gallery-card span{
+  left:22px !important;
+  bottom:22px !important;
+  max-width:calc(100% - 44px);
+}
+
+/* ARCHIVE
+   Give every flyer a real inner frame and place its title below the artwork,
+   so no flyer text/logo is hidden by cropping or overlay copy. */
+.archive-card{
+  min-width:0;
+}
+.archive-image{
+  aspect-ratio:auto !important;
+  overflow:hidden !important;
+  background:#0d0d0c !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+  padding:10px 10px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.archive-image img{
+  width:100% !important;
+  height:auto !important;
+  aspect-ratio:3/4;
+  object-fit:contain !important;
+  object-position:center center !important;
+  display:block;
+  background:#111;
+  transform:none !important;
+}
+.archive-card:hover img{
+  transform:none !important;
+}
+.archive-overlay{
+  position:static !important;
+  inset:auto !important;
+  min-width:0;
+  padding:0 4px 2px;
+}
+.archive-overlay small{
+  margin-bottom:7px !important;
+}
+.archive-overlay h3{
+  margin:0 !important;
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+.archive-meta{
+  padding:10px 4px 0 !important;
+}
+
+@media(max-width:680px){
+  .gallery-card{
+    padding:8px;
+  }
+  .gallery-card span{
+    left:18px !important;
+    bottom:18px !important;
+    max-width:calc(100% - 36px);
+  }
+  .archive-image{
+    padding:8px 8px 11px;
+    gap:10px;
+  }
+  .archive-image img{
+    aspect-ratio:auto;
+    max-height:78svh;
+  }
+  .archive-overlay{
+    padding-inline:4px;
+  }
+}
