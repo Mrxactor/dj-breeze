@@ -1,484 +1,155 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>DJ Breeze — Official</title>
-<meta content="DJ Breeze — Hip-Hop, R&amp;B, throwback energy och live moments." name="description"/>
-<style>
-  :root {
-    --ink:#090909;
-    --paper:#f2eee5;
-    --paper-2:#ddd5c5;
-    --wine:#8a1538;
-    --blue:#3657ff;
-    --line:rgba(255,255,255,.18);
-    --muted:#a7a7a7;
-    --max:1400px;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth;background:var(--ink)}
-  body{
-    margin:0;background:var(--ink);color:#fff;
-    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow-x:hidden;
-  }
-  body::before{
-    content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.12;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-    mix-blend-mode:soft-light;
-  }
-  a{color:inherit;text-decoration:none}
-  button{font:inherit}
-  .wrap{width:min(calc(100% - 40px),var(--max));margin:auto}
-  .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#b8b8b8}
-  .section{padding:110px 0}
-  .rule{height:1px;background:rgba(255,255,255,.16)}
-  .nav{
-    position:fixed;top:0;left:0;right:0;z-index:50;height:74px;
-    display:flex;align-items:center;background:linear-gradient(to bottom,rgba(7,7,7,.88),rgba(7,7,7,.08));
-    backdrop-filter:blur(7px);
-  }
-  .nav-inner{width:min(calc(100% - 40px),var(--max));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:30px}
-  .brand{font-weight:950;letter-spacing:-.055em;font-size:25px}
-  .brand small{font-size:9px;letter-spacing:.25em;font-weight:700;margin-left:9px;color:#aaa;vertical-align:middle}
-  .nav-links{display:flex;gap:28px;font-size:12px;text-transform:uppercase;letter-spacing:.12em}
-  .nav-links a{opacity:.76;transition:.2s}
-  .nav-links a:hover{opacity:1}
-  .sound-chip{
-    border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:9px 12px;
-    font-size:10px;letter-spacing:.14em;text-transform:uppercase;display:flex;gap:8px;align-items:center;
-  }
-  .sound-dot{width:7px;height:7px;border-radius:50%;background:#707070}
-  .hero{min-height:100svh;position:relative;display:flex;align-items:flex-end;overflow:hidden}
-  .hero-media{position:absolute;inset:0}
-  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 43%;filter:saturate(.86) contrast(1.06)}
-  .hero-media::after{
-    content:"";position:absolute;inset:0;
-    background:
-      linear-gradient(to top,rgba(6,6,6,.98) 0%,rgba(6,6,6,.45) 44%,rgba(6,6,6,.18) 70%,rgba(6,6,6,.5) 100%),
-      linear-gradient(95deg,rgba(54,87,255,.13),transparent 42%,rgba(138,21,56,.17));
-  }
-  .hero-content{position:relative;z-index:2;width:min(calc(100% - 40px),var(--max));margin:0 auto;padding:130px 0 48px}
-  .hero-topline{display:flex;justify-content:flex-start;align-items:end;gap:24px;margin-bottom:18px}
-  .hero h1{margin:0;font-size:clamp(76px,14.4vw,220px);line-height:.74;letter-spacing:-.08em;font-weight:1000}
-  .hero h1 span{display:block}
-  .hero-sub{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-top:28px}
-  .hero-sub p{margin:0;max-width:540px;font-size:clamp(20px,2.1vw,33px);line-height:1.12;font-weight:650;letter-spacing:-.035em}
-  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-  .btn{
-    min-height:50px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.28);
-    display:inline-flex;align-items:center;justify-content:center;gap:9px;text-transform:uppercase;
-    font-size:11px;letter-spacing:.13em;transition:.25s;background:rgba(255,255,255,.03)
-  }
-  .btn:hover{transform:translateY(-2px);background:#fff;color:#000}
-  .btn.primary{background:var(--paper);color:#090909;border-color:var(--paper)}
-  .marquee{overflow:hidden;border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);background:#0c0c0c}
-  .marquee-track{display:flex;width:max-content;animation:marquee 24s linear infinite}
-  .marquee-item{font-size:15px;letter-spacing:.16em;text-transform:uppercase;padding:17px 28px;white-space:nowrap;color:#d8d8d8}
-  .marquee-item b{color:var(--blue)}
-  @keyframes marquee{to{transform:translateX(-50%)}}
-  .manifesto{background:var(--paper);color:var(--ink)}
-  .manifesto-grid{display:grid;grid-template-columns:.8fr 1.3fr;gap:70px;align-items:start}
-  .manifesto h2{font-size:clamp(52px,7vw,115px);line-height:.86;letter-spacing:-.065em;margin:0;font-weight:950}
-  .manifesto-copy{padding-top:10px}
-  .manifesto-copy p{font-size:clamp(23px,2.6vw,42px);line-height:1.08;letter-spacing:-.04em;margin:0 0 36px;max-width:920px}
-  .manifesto-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid rgba(0,0,0,.2);padding-top:18px}
-  .meta-box strong{display:block;font-size:30px;letter-spacing:-.045em}
-  .meta-box span{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#666}
-  .sound-section{background:#0a0a0a}
-  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:38px}
-  .section-head h2{font-size:clamp(50px,7vw,104px);line-height:.86;letter-spacing:-.065em;margin:0;font-weight:950}
-  .section-head p{max-width:430px;color:#a9a9a9;line-height:1.5;margin:0}
-  .era-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .era-card{position:relative;min-height:560px;overflow:hidden;border-radius:2px;background:#161616;border:1px solid rgba(255,255,255,.09)}
-  .era-card img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transition:transform .6s ease;filter:saturate(.88) contrast(1.05)}
-  .era-card:hover img{transform:scale(1.035)}
-  .era-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.96),rgba(0,0,0,.03) 66%)}
-  .era-copy{position:absolute;z-index:2;left:24px;right:24px;bottom:22px}
-  .era-num{font-size:11px;letter-spacing:.17em;color:#c8c8c8}
-  .era-copy h3{font-size:42px;line-height:.92;letter-spacing:-.05em;margin:8px 0 10px}
-  .era-copy p{margin:0;color:#cbcbcb;max-width:330px;line-height:1.45}
-  .live-section{padding-top:40px}
-  .gallery{display:grid;grid-template-columns:1.4fr .9fr .9fr;grid-template-rows:360px 360px;gap:12px}
-  .tile{overflow:hidden;position:relative;background:#111}
-  .tile.tall{grid-row:span 2}
-  .tile img{width:100%;height:100%;object-fit:cover;transition:transform .55s ease}
-  .tile:hover img{transform:scale(1.025)}
-  .tile .tag{position:absolute;left:14px;bottom:14px;background:rgba(8,8,8,.72);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:8px 10px;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
-  .posters{background:#141414;padding:88px 0 100px}
-  .poster-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:start}
-  .poster{background:#0e0e0e;overflow:hidden;position:relative}
-  .poster img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:.5s}
-  .poster:nth-child(2) img{aspect-ratio:1/1}
-  .poster:hover img{transform:scale(1.025)}
-  .poster-cap{display:flex;justify-content:space-between;gap:20px;padding:12px 2px;color:#aaa;font-size:10px;text-transform:uppercase;letter-spacing:.12em}
-  .services{background:var(--paper);color:var(--ink)}
-  .services-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:80px}
-  .services h2{font-size:clamp(54px,7vw,110px);line-height:.84;letter-spacing:-.07em;margin:0;position:sticky;top:110px}
-  .service-list{border-top:1px solid rgba(0,0,0,.2)}
-  .service-row{display:grid;grid-template-columns:80px 1fr auto;gap:20px;align-items:center;padding:26px 0;border-bottom:1px solid rgba(0,0,0,.2)}
-  .service-row span:first-child{font-size:11px;letter-spacing:.15em;color:#666}
-  .service-row strong{font-size:clamp(27px,3vw,48px);letter-spacing:-.045em}
-  .service-row em{font-style:normal;font-size:11px;letter-spacing:.13em;text-transform:uppercase}
-  .booking{min-height:78vh;display:flex;align-items:center;position:relative;overflow:hidden;background:#0b0b0b}
-  .booking::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:var(--wine);filter:blur(160px);opacity:.26;left:-120px;bottom:-160px}
-  .booking::after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:var(--blue);filter:blur(170px);opacity:.2;right:-140px;top:-180px}
-  .booking-inner{position:relative;z-index:2;text-align:center;width:min(calc(100% - 40px),1100px);margin:auto}
-  .booking h2{font-size:clamp(64px,10vw,150px);line-height:.82;letter-spacing:-.075em;margin:14px 0 32px}
-  .booking p{font-size:18px;color:#b9b9b9;max-width:650px;margin:0 auto 32px;line-height:1.5}
-  .booking .chips{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-bottom:32px}
-  .booking .chips span{border:1px solid rgba(255,255,255,.19);border-radius:999px;padding:9px 12px;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
-  footer{padding:34px 0 44px;border-top:1px solid rgba(255,255,255,.15);background:#090909}
-  .footer-grid{display:flex;justify-content:space-between;gap:30px;align-items:end}
-  .footer-brand{font-size:45px;font-weight:950;letter-spacing:-.06em}
-  .footer-right{text-align:right;color:#aaa;font-size:12px;line-height:1.7}
-  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
-  .reveal.in{opacity:1;transform:none}
-  .mobile-menu{display:none}
-  @media (max-width: 980px){
-    .nav-links{display:none}
-    .manifesto-grid,.services-grid{grid-template-columns:1fr;gap:40px}
-    .manifesto-meta{grid-template-columns:1fr}
-    .era-grid{grid-template-columns:1fr}
-    .era-card{min-height:520px}
-    .gallery{grid-template-columns:1fr 1fr;grid-template-rows:420px 300px 300px}
-    .tile.tall{grid-row:auto;grid-column:span 2}
-    .poster-rail{grid-template-columns:1fr 1fr}
-    .services h2{position:static}
-  }
-  @media (max-width: 640px){
-    .wrap,.nav-inner,.hero-content{width:min(calc(100% - 26px),var(--max))}
-    .nav{height:64px}
-    .brand small{display:none}
-    .hero-content{padding-bottom:28px}
-    .hero h1{font-size:clamp(68px,25vw,110px)}
-    .hero-topline{align-items:flex-start}
-    .hero-sub{flex-direction:column;align-items:flex-start}
-    .hero-actions{justify-content:flex-start}
-    .section{padding:78px 0}
-    .manifesto h2,.section-head h2{font-size:58px}
-    .manifesto-copy p{font-size:26px}
-    .section-head{align-items:flex-start;flex-direction:column}
-    .gallery{display:grid;grid-template-columns:1fr;grid-template-rows:none}
-    .tile,.tile.tall{height:370px;grid-column:auto}
-    .poster-rail{grid-template-columns:1fr 1fr;gap:9px}
-    .poster-cap{display:none}
-    .service-row{grid-template-columns:46px 1fr;gap:10px}
-    .service-row em{grid-column:2}
-    .booking h2{font-size:68px}
-    .footer-grid{flex-direction:column;align-items:flex-start}
-    .footer-right{text-align:left}
-  }
-
-  .site-sound-chip{opacity:.58;cursor:default}
-  .hero-media{position:absolute;inset:0;background:#050505}
-  .hero-media video{
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;object-position:center center;
-    filter:saturate(.9) contrast(1.07) brightness(.88);
-  }
-  .hero-media::after{
-    content:"";position:absolute;inset:0;z-index:1;
-    background:
-      linear-gradient(to top,rgba(6,6,6,.98) 0%,rgba(6,6,6,.48) 36%,rgba(6,6,6,.14) 68%,rgba(6,6,6,.38) 100%),
-      linear-gradient(92deg,rgba(5,5,5,.38),rgba(5,5,5,.04) 53%,rgba(5,5,5,.18));
-    pointer-events:none;
-  }
-  .hero-sound-wrap{
-    display:flex;justify-content:flex-end;margin:-2px 0 18px;
-  }
-  .hero-sound{
-    display:inline-flex;align-items:center;gap:9px;
-    min-height:38px;padding:0 12px;border:1px solid rgba(255,255,255,.28);
-    border-radius:999px;background:rgba(4,4,4,.34);color:#fff;
-    backdrop-filter:blur(8px);cursor:pointer;
-    text-transform:uppercase;font-size:9px;letter-spacing:.14em;
-    transition:.2s ease;
-  }
-  .hero-sound:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
-  .hero-sound-icon{font-size:8px;color:#888}
-  .hero-sound.sound-on .hero-sound-icon{
-    color:#8eff9c;text-shadow:0 0 10px rgba(142,255,156,.75);
-  }
-  @media (max-width:640px){
-    .hero-media video{object-position:center center}
-    .hero-sound-wrap{justify-content:flex-start;margin:6px 0 15px}
-  }
-
-
-  .site-sound-chip{opacity:1;cursor:pointer}
-  .site-sound-chip:hover{background:rgba(255,255,255,.10)}
-  .site-sound-chip.sound-on .sound-dot{
-    background:#8eff9c;
-    box-shadow:0 0 14px rgba(142,255,156,.72);
-  }
-
-
-  .sr-only{
-    position:absolute !important;
-    width:1px;height:1px;
-    padding:0;margin:-1px;
-    overflow:hidden;clip:rect(0,0,0,0);
-    white-space:nowrap;border:0;
-  }
-  .hero-sound-wrap,
-  .hero-sound{display:none !important}
-  .hero{position:relative}
-  .hero-sound-corner{
-    position:absolute;
-    left:18px;
-    bottom:18px;
-    z-index:3;
-    width:42px;
-    height:42px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:999px;
-    border:1px solid rgba(255,255,255,.16);
-    background:rgba(6,6,6,.18);
-    color:#fff;
-    backdrop-filter:blur(10px);
-    box-shadow:0 12px 30px rgba(0,0,0,.14);
-    cursor:pointer;
-    transition:transform .2s ease, background .2s ease, border-color .2s ease;
-  }
-  .hero-sound-corner:hover{
-    transform:translateY(-1px);
-    background:rgba(255,255,255,.10);
-    border-color:rgba(255,255,255,.34);
-  }
-  .hero-sound-corner-icon{
-    font-size:18px;
-    line-height:1;
-    filter:grayscale(.05);
-  }
-  .hero-sound-corner.sound-on .hero-sound-corner-icon{
-    text-shadow:0 0 10px rgba(142,255,156,.45);
-  }
-  @media (max-width: 640px){
-    .hero-sound-corner{
-      left:10px;
-      bottom:12px;
-      width:40px;
-      height:40px;
-    }
-    .hero-sound-corner-icon{font-size:16px}
-  }
-
-
-
-  /* Functional layers added without changing the locked design-master visual system. */
-  .service-row-link{color:inherit;text-decoration:none}
-  .booking .chips a{border:1px solid rgba(255,255,255,.19);border-radius:999px;padding:9px 12px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;transition:.2s}
-  .booking .chips a:hover,.booking .chips a.active{background:#fff;color:#090909;border-color:#fff}
-  .booking-form-wrap{width:min(100%,900px);margin:28px auto 0;padding:20px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(8,8,8,.72);backdrop-filter:blur(12px);text-align:left}
-  .booking-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-  .booking-field{display:flex;flex-direction:column;gap:7px}
-  .booking-field.full{grid-column:1/-1}
-  .booking-field label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#aaa}
-  .booking-field input,.booking-field select,.booking-field textarea{width:100%;border:1px solid rgba(255,255,255,.18);background:#111;color:#fff;border-radius:10px;padding:13px;font:inherit;outline:none}
-  .booking-field textarea{min-height:115px;resize:vertical}
-  .booking-field input:focus,.booking-field select:focus,.booking-field textarea:focus{border-color:rgba(255,255,255,.55)}
-  .booking-form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
-  .booking-form-actions .btn{cursor:pointer}
-  .booking-status{margin-top:13px;color:#bbb;font-size:12px;line-height:1.5;min-height:18px}
-  #booking-form{scroll-margin-top:90px}
-  @media(max-width:640px){
-    .booking-form-grid{grid-template-columns:1fr}
-    .booking-field.full{grid-column:auto}
-    .booking-form-wrap{padding:16px;border-radius:14px}
-    .booking .chips a{font-size:9px;padding:8px 10px}
-  }
-</style>
-
-<link rel="stylesheet" href="css/responsive-master.css?v=20260910-1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080806">
+  <meta name="description" content="DJ Breeze — Hip-Hop, R&B, Throwback & Live. Official website and bookings.">
+  <title>DJ Breeze — Official</title>
+  <link rel="stylesheet" href="css/noir-final.css?v=20260914-final">
 </head>
 <body>
-<audio autoplay="" id="siteSoundtrack" loop="" preload="auto">
-<source src="assets/audio/website-mix.mp3" type="audio/mpeg"/>
-</audio>
-<header class="nav">
-<div class="nav-inner">
-<a class="brand" href="#top">DJ BREEZE <small>OFFICIAL</small></a>
-<nav aria-label="Main navigation" class="nav-links">
-<a href="#sound">Sound</a>
-<a href="#live">Live</a>
-<a href="#events">Events</a>
-<a href="#booking">Booking</a>
-</nav>
-<button aria-pressed="true" class="sound-chip site-sound-chip sound-on" id="siteSoundToggle" title="Slå på eller av sidans soundtrack" type="button">
-<span class="sound-dot"></span><span id="siteSoundLabel">Site sound on</span>
-</button>
-</div>
-</header>
-<main id="top">
-<section class="hero">
-<div class="hero-media">
-<video autoplay="" id="heroVideo" loop="" muted="" playsinline="" poster="assets/images/hero-poster.jpg" preload="metadata">
-<source src="assets/video/hero.mp4" type="video/mp4"/>
-</video>
-</div>
-<div class="hero-content">
-<div class="hero-topline">
-<div class="kicker">Hip-Hop / R&amp;B / Throwback / Live</div>
-</div>
-<h1><span>DJ</span><span>BREEZE</span></h1>
-<div class="hero-sub">
-<p>90s soul. 2000s energy. Records chosen for the room — not the algorithm.</p>
-<div class="hero-actions">
-<a class="btn primary" href="#booking">Check availability ↗</a>
-<a class="btn" href="#sound">Explore the sound ↓</a>
-</div>
-</div>
-</div>
-<button aria-label="Toggle hero sound" aria-pressed="false" class="hero-sound-corner" id="heroSoundToggle" title="Hero sound" type="button">
-<span class="hero-sound-corner-icon" id="heroSoundIcon">🔇</span>
-<span class="sr-only" id="heroSoundLabel">Hero sound off</span>
-</button>
-</section>
-<div aria-hidden="true" class="marquee">
-<div class="marquee-track">
-<div class="marquee-item">MID 90s <b>●</b> EARLY 00s <b>●</b> HIP-HOP <b>●</b> R&amp;B <b>●</b> CLUB ENERGY <b>●</b> MID 90s <b>●</b> EARLY 00s <b>●</b> HIP-HOP <b>●</b> R&amp;B <b>●</b> CLUB ENERGY <b>●</b></div>
-<div class="marquee-item">MID 90s <b>●</b> EARLY 00s <b>●</b> HIP-HOP <b>●</b> R&amp;B <b>●</b> CLUB ENERGY <b>●</b> MID 90s <b>●</b> EARLY 00s <b>●</b> HIP-HOP <b>●</b> R&amp;B <b>●</b> CLUB ENERGY <b>●</b></div>
-</div>
-</div>
-<section class="section manifesto">
-<div class="wrap manifesto-grid">
-<div class="reveal">
-<div class="kicker" style="color:#6d6d6d;margin-bottom:18px">The point of view</div>
-<h2>GOOD<br/>MUSIC<br/>AGES<br/>WELL.</h2>
-</div>
-<div class="manifesto-copy reveal">
-<p>DJ Breeze lives in the space between the records that raised a generation and the songs moving the room right now.</p>
-<p style="font-size:18px;max-width:720px;line-height:1.55;letter-spacing:-.015em;color:#4c4c4c">Mid-90s hip-hop, R&amp;B, early-2000s favourites, forgotten cuts and current selections — put together with timing, personality and crowd feel.</p>
-<div class="manifesto-meta">
-<div class="meta-box"><strong>90s</strong><span>Foundation</span></div>
-<div class="meta-box"><strong>00s</strong><span>Sweet spot</span></div>
-<div class="meta-box"><strong>NOW</strong><span>Room energy</span></div>
-</div>
-</div>
-</div>
-</section>
-<section class="section sound-section" id="sound">
-<div class="wrap">
-<div class="section-head reveal">
-<div>
-<div class="kicker" style="margin-bottom:16px">01 / The Sound</div>
-<h2>BUILT ON<br/>CLASSICS.</h2>
-</div>
-<p>The visual language follows the music: soulful, direct, slightly nostalgic — but never dressed up like a retro theme park.</p>
-</div>
-<div class="era-grid">
-<article class="era-card reveal">
-<img alt="Soulful Hip Hop and R&amp;B Classics flyer" src="assets/images/soulful-classics.jpg"/>
-<div class="era-copy"><div class="era-num">01 / FOUNDATION</div><h3>MID 90s</h3><p>Golden-era hip-hop, R&amp;B, soul and records with actual memory attached to them.</p></div>
-</article>
-<article class="era-card reveal">
-<img alt="Throwback Fridays flyer" src="assets/images/throwback-fridays.jpg"/>
-<div class="era-copy"><div class="era-num">02 / SWEET SPOT</div><h3>EARLY 00s</h3><p>Anthems, slow jams, club records and the era that still gets a room singing together.</p></div>
-</article>
-<article class="era-card reveal">
-<img alt="R&amp;B Afterwork event flyer" src="assets/images/rnb-afterwork.jpg"/>
-<div class="era-copy"><div class="era-num">03 / RIGHT NOW</div><h3>ROOM FIRST</h3><p>The point is not nostalgia. The point is knowing what the crowd needs next.</p></div>
-</article>
-</div>
-</div>
-</section>
-<section class="section live-section" id="live">
-<div class="wrap">
-<div class="section-head reveal">
-<div>
-<div class="kicker" style="margin-bottom:16px">02 / Live Energy</div>
-<h2>YOU HAD<br/>TO BE THERE.</h2>
-</div>
-<p>Real crowd moments, real rooms, real nights. Video will later take over selected tiles and the hero.</p>
-</div>
-<div class="gallery">
-<div class="tile tall reveal"><img alt="Portrait of DJ Breeze" src="assets/images/dj-breeze-portrait.jpg"/><span class="tag">Artist / Portrait</span></div>
-<div class="tile reveal"><img alt="Outdoor event atmosphere" src="assets/images/outdoor-event.jpg"/><span class="tag">Event / Atmosphere</span></div>
-<div class="tile reveal"><img alt="Crowd at a live event" src="assets/images/crowd-live.jpg"/><span class="tag">Crowd / Live</span></div>
-<div class="tile reveal"><img alt="DJ Breeze performing" src="assets/images/booth-live.jpg"/><span class="tag">Booth / Live</span></div>
-<div class="tile reveal"><img alt="DJ Breeze event artwork" src="assets/images/promo-artwork.jpg"/><span class="tag">Promo / Artwork</span></div>
-</div>
-</div>
-</section>
-<section class="posters">
-<div class="wrap">
-<div class="section-head reveal">
-<div>
-<div class="kicker" style="margin-bottom:16px">03 / Visual Archive</div>
-<h2>THE FLYERS<br/>ARE PART OF IT.</h2>
-</div>
-<p>His existing artwork becomes part of the brand language rather than something hidden away in a gallery.</p>
-</div>
-<div class="poster-rail">
-<div class="poster reveal"><img alt="R&amp;B Afterwork flyer" src="assets/images/rnb-afterwork.jpg"/><div class="poster-cap"><span>R&amp;B Afterwork</span><span>Archive</span></div></div>
-<div class="poster reveal"><img alt="Soulful Classics flyer" src="assets/images/soulful-classics.jpg"/><div class="poster-cap"><span>Soulful Classics</span><span>Archive</span></div></div>
-<div class="poster reveal"><img alt="R&amp;B Sounds flyer" src="assets/images/rnb-sounds.jpg"/><div class="poster-cap"><span>R&amp;B Sounds</span><span>Archive</span></div></div>
-<div class="poster reveal"><img alt="Who Told You event flyer" src="assets/images/who-told-you.jpg"/><div class="poster-cap"><span>Who Told You?</span><span>Archive</span></div></div>
-</div>
-</div>
-</section>
-<section class="section services" id="events">
-<div class="wrap services-grid">
-<div class="reveal">
-<div class="kicker" style="color:#6d6d6d;margin-bottom:18px">04 / Bookings</div>
-<h2>ONE DJ.<br/>DIFFERENT<br/>ROOMS.</h2>
-</div>
-<div class="service-list reveal">
-<a class="service-row service-row-link booking-type-link" data-booking-type="club" href="#booking-form"><span>01</span><strong>Club / Nightlife</strong><em>High energy ↗</em></a>
-<a class="service-row service-row-link booking-type-link" data-booking-type="wedding" href="#booking-form"><span>02</span><strong>Weddings</strong><em>Tailored ↗</em></a>
-<a class="service-row service-row-link booking-type-link" data-booking-type="private" href="#booking-form"><span>03</span><strong>Private Parties</strong><em>Flexible ↗</em></a>
-<a class="service-row service-row-link booking-type-link" data-booking-type="corporate" href="#booking-form"><span>04</span><strong>Corporate Events</strong><em>Professional ↗</em></a>
-<a class="service-row service-row-link booking-type-link" data-booking-type="public" href="#booking-form"><span>05</span><strong>Public Events</strong><em>Large room ↗</em></a>
-</div>
-</div>
-</section>
-<section class="booking" id="booking">
-<div class="booking-inner reveal">
-<div class="kicker">Bookings / DJ Breeze</div>
-<h2>LET'S MOVE<br/>THE ROOM.</h2>
-<p>Choose the type of event and send DJ Breeze the details. Booking requests are sent directly to the DJ Breeze admin dashboard.</p>
-<div class="chips">
-<a class="booking-type-link" data-booking-type="club" href="#booking-form">Club</a>
-<a class="booking-type-link" data-booking-type="wedding" href="#booking-form">Wedding</a>
-<a class="booking-type-link" data-booking-type="private" href="#booking-form">Private</a>
-<a class="booking-type-link" data-booking-type="corporate" href="#booking-form">Corporate</a>
-<a class="booking-type-link" data-booking-type="public" href="#booking-form">Public Event</a>
-</div>
-<a class="btn primary" href="#booking-form">Start booking request ↗</a>
-<div class="booking-form-wrap" id="booking-form">
-<form id="bookingForm">
-<div class="booking-form-grid">
-<div class="booking-field"><label for="bookingType">Event type</label><select id="bookingType" required="">
-<option value="club">Club / Nightlife</option><option value="wedding">Wedding</option><option value="private">Private Party</option><option value="corporate">Corporate Event</option><option value="public">Public Event / Festival</option>
-</select></div>
-<div class="booking-field"><label for="bookingDate">Date</label><input id="bookingDate" required="" type="date"/></div>
-<div class="booking-field"><label for="bookingVenue">Venue / City</label><input id="bookingVenue" placeholder="Göteborg / Venue" required="" type="text"/></div>
-<div class="booking-field"><label for="bookingName">Your name</label><input id="bookingName" placeholder="Name" required="" type="text"/></div>
-<div class="booking-field"><label for="bookingEmail">Email</label><input id="bookingEmail" placeholder="you@example.com" required="" type="email"/></div>
-<div class="booking-field"><label for="bookingPhone">Phone</label><input id="bookingPhone" placeholder="+46 ..." type="tel"/></div>
-<div class="booking-field full"><label for="bookingMessage">Details</label><textarea id="bookingMessage" placeholder="Time, number of guests, music, setup, budget or anything DJ Breeze should know."></textarea></div>
-</div>
-<div class="booking-form-actions"><button class="btn primary" type="submit">Send booking request ↗</button><button class="btn" id="copyBooking" type="button">Copy request</button></div>
-<div aria-live="polite" class="booking-status" id="bookingStatus"></div>
-</form>
-</div>
-</div>
-</section>
-</main>
-<footer>
-<div class="wrap footer-grid">
-<div>
-<div class="footer-brand">DJ BREEZE</div>
-<div class="kicker" style="margin-top:8px">@DJBREEZEOFFICIAL</div>
-</div>
-<div class="footer-right">DJ Breeze — Official<br/>Hip-Hop / R&amp;B / Throwback / Live</div>
-</div>
-</footer>
+  <div id="pageLoader" class="page-loader" aria-hidden="true"><span>DJ BREEZE</span></div>
 
-<script src="js/app.js?v=20260910-5"></script><script src="js/cms-runtime.js?v=20260910-3"></script><script src="js/site-controls.js?v=20260910-3"></script></body>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="#top" class="brand" aria-label="DJ Breeze home"><strong>DJ BREEZE</strong><span>OFFICIAL</span></a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#identity" data-i18n="navAbout">Om</a>
+        <a href="#sound" data-i18n="navSound">Sound</a>
+        <a href="#live" data-i18n="navLive">Live</a>
+        <a href="#archive" data-i18n="navArchive">Arkiv</a>
+        <a href="#booking" data-i18n="navBooking">Bokning</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switch" aria-label="Language">
+          <button type="button" class="lang-btn active" data-lang="sv">SV</button><span>/</span><button type="button" class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <button type="button" class="hide-menu-btn" id="hideMenuBtn"><span data-i18n="hideMenu">Dölj meny</span><span aria-hidden="true">↑</span></button>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+  <button id="showMenuBtn" class="show-menu-btn" type="button"><span data-i18n="showMenu">Visa meny</span><span aria-hidden="true">↓</span></button>
+
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <div class="mobile-menu-top">
+      <span>DJ BREEZE / OFFICIAL</span>
+      <button type="button" id="mobileClose" class="mobile-close"><span data-i18n="hideMenu">Dölj meny</span> ×</button>
+    </div>
+    <nav>
+      <a href="#identity" data-i18n="navAbout">Om</a>
+      <a href="#sound" data-i18n="navSound">Sound</a>
+      <a href="#live" data-i18n="navLive">Live</a>
+      <a href="#archive" data-i18n="navArchive">Arkiv</a>
+      <a href="#booking" data-i18n="navBooking">Bokning</a>
+    </nav>
+  </div>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div id="heroImage" class="hero-image" role="img" aria-label="DJ Breeze at the turntables" style="background-image:url('assets/images/hero-poster.jpg')"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow" id="heroKicker">OFFICIAL SITE • ARTIST / DJ</div>
+        <h1 id="heroTitle"><span>DJ</span><span>BREEZE</span></h1>
+        <p id="heroCopy">90-talets själ. 2000-talets energi. Musik vald för rummet — inte algoritmen.</p>
+        <div class="hero-cta-row">
+          <a class="primary-cta" href="#booking"><span data-i18n="bookDj">Boka DJ Breeze</span><span>↗</span></a>
+          <a class="text-cta" href="#identity"><span data-i18n="meetDj">Möt DJ Breeze</span><span>↓</span></a>
+        </div>
+      </div>
+      <div class="hero-side-note">OFFICIAL DJ BREEZE / WORLDWIDE · SINCE THE MID 90s</div>
+      <div class="hero-bottom-note"><span>MUSIC</span><span>PEOPLE</span><span>GOOD TIMES</span></div>
+    </section>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>MID 90s ✦ EARLY 00s ✦ HIP-HOP ✦ R&B ✦ THROWBACK ✦ CLUB ENERGY ✦ LIVE ✦ </span><span>MID 90s ✦ EARLY 00s ✦ HIP-HOP ✦ R&B ✦ THROWBACK ✦ CLUB ENERGY ✦ LIVE ✦ </span></div></div>
+
+    <section id="identity" class="identity section-light reveal">
+      <div class="section-shell identity-grid">
+        <div>
+          <div class="section-index">00 / DJ BREEZE</div>
+          <h2 id="aboutHeading">DET HÄR ÄR<br>DJ BREEZE.</h2>
+        </div>
+        <div class="identity-copy">
+          <p class="identity-lead" id="aboutLead">Klassikerna först. Rummet alltid i fokus.</p>
+          <p id="aboutBody">DJ Breeze rör sig mellan hip-hop, R&B, throwbacks och dagens energi — med timing, personlighet och känsla för publiken.</p>
+          <div class="identity-meta"><span>HIP-HOP</span><span>R&B</span><span>THROWBACK</span><span>LIVE</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sound" class="section-dark reveal">
+      <div class="section-shell">
+        <div class="section-head">
+          <div><div class="section-index">01 / THE SOUND</div><h2 data-i18n-html="soundHeading">BYGGT PÅ<br>KLASSIKER.</h2></div>
+          <p data-i18n="soundIntro">90-talet lade grunden. 00-talet blev sweet spot. Men rummet bestämmer alltid nästa låt.</p>
+        </div>
+        <div class="era-grid" id="eraGrid"><div class="loading-card">LOADING SOUND...</div></div>
+      </div>
+    </section>
+
+    <section id="live" class="section-dark live-section reveal">
+      <div class="section-shell">
+        <div class="section-head">
+          <div><div class="section-index">02 / LIVE</div><h2 data-i18n-html="liveHeading">DU VAR TVUNGEN<br>ATT VARA DÄR.</h2></div>
+          <p data-i18n="liveIntro">Riktiga rum, riktiga människor och kvällar där musiken gjorde jobbet.</p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"><div class="loading-card">LOADING LIVE...</div></div>
+      </div>
+    </section>
+
+    <section id="archive" class="archive-section reveal">
+      <div class="section-shell">
+        <div class="section-head">
+          <div><div class="section-index">03 / ARCHIVE</div><h2 data-i18n-html="archiveHeading">FLYERS ÄR<br>EN DEL AV HISTORIEN.</h2></div>
+          <p data-i18n="archiveIntro">Utvalda event, artwork och kvällar som byggt DJ Breeze-världen.</p>
+        </div>
+        <div class="archive-grid" id="archiveGrid"><div class="loading-card">LOADING ARCHIVE...</div></div>
+      </div>
+    </section>
+
+    <section id="booking" class="booking-section reveal">
+      <div class="booking-glow glow-a"></div><div class="booking-glow glow-b"></div>
+      <div class="section-shell booking-shell">
+        <div class="section-index">04 / BOOKINGS</div>
+        <h2 data-i18n-html="bookingHeading">LÅT OSS FLYTTA<br>RUMMET.</h2>
+        <p class="booking-intro" data-i18n="bookingIntro">Välj typ av event och skicka detaljerna direkt. Förfrågan hamnar i DJ Breeze admin.</p>
+        <div class="booking-type-chips" id="bookingTypeChips">
+          <button data-type="club">Club</button><button data-type="wedding" data-i18n="wedding">Bröllop</button><button data-type="private">Private</button><button data-type="corporate">Corporate</button><button data-type="public">Public Event</button>
+        </div>
+        <form id="bookingForm" class="booking-form" novalidate>
+          <div class="hp-field" aria-hidden="true"><label>Website<input type="text" id="websiteField" tabindex="-1" autocomplete="off"></label></div>
+          <div class="field"><label for="bookingType" data-i18n="eventType">Eventtyp</label><select id="bookingType" required><option value="club">Club / Nightlife</option><option value="wedding" data-i18n="wedding">Bröllop</option><option value="private">Private Party</option><option value="corporate">Corporate Event</option><option value="public">Public Event</option></select></div>
+          <div class="field"><label for="bookingDate" data-i18n="date">Datum</label><input id="bookingDate" type="date" required></div>
+          <div class="field"><label for="bookingCity" data-i18n="city">Stad / plats</label><input id="bookingCity" type="text" required placeholder="Göteborg"></div>
+          <div class="field"><label for="bookingVenue" data-i18n="venue">Venue (valfritt)</label><input id="bookingVenue" type="text" placeholder="Venue"></div>
+          <div class="field"><label for="bookingName" data-i18n="name">Namn</label><input id="bookingName" type="text" required autocomplete="name"></div>
+          <div class="field"><label for="bookingEmail">Email</label><input id="bookingEmail" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="bookingPhone" data-i18n="phone">Telefon (valfritt)</label><input id="bookingPhone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="bookingGuests" data-i18n="guests">Antal gäster (valfritt)</label><input id="bookingGuests" type="number" min="0" inputmode="numeric"></div>
+          <div class="field field-full"><label for="bookingMessage" data-i18n="details">Detaljer</label><textarea id="bookingMessage" rows="5" data-i18n-placeholder="detailsPlaceholder" placeholder="Tid, publik, upplägg, musik, budget eller annat DJ Breeze bör känna till."></textarea></div>
+          <div class="form-footer"><button type="submit" class="submit-btn"><span data-i18n="sendRequest">Skicka bokningsförfrågan</span><span>↗</span></button><div id="bookingStatus" class="form-status" aria-live="polite"></div></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="section-shell footer-grid"><div><div class="footer-brand">DJ BREEZE</div><div class="footer-sub">OFFICIAL / HIP-HOP / R&B / THROWBACK / LIVE</div></div><div class="footer-right"><p id="footerCopy">DJ Breeze — Official · Hip-Hop / R&B / Throwback / Live</p><a id="instagramLink" href="https://instagram.com/djbreezeofficial" target="_blank" rel="noopener">Instagram ↗</a><a href="admin/" class="admin-link">Admin</a></div></div></footer>
+
+  <div class="music-player" id="musicPlayer">
+    <button type="button" class="music-toggle" id="musicToggle" aria-label="Play music"><span id="musicIcon">▶</span></button>
+    <div class="music-main">
+      <div class="music-meta"><span class="music-eyebrow" data-i18n="nowPlaying">NU SPELAS</span><strong id="trackTitle">Website Mix 03 Extended</strong></div>
+      <div class="music-progress-row"><span id="elapsed">0:00</span><input id="musicProgress" type="range" min="0" max="1000" value="0" aria-label="Track progress"><span id="duration">0:00</span></div>
+    </div>
+    <div class="equalizer" id="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <button type="button" class="mute-btn" id="muteBtn" aria-label="Mute">VOL</button>
+    <input class="volume-slider" id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Volume">
+    <button type="button" class="player-collapse" id="playerCollapse" aria-label="Minimize player">—</button>
+    <audio id="siteAudio" preload="metadata" loop><source src="assets/audio/website-mix.mp3" type="audio/mpeg"></audio>
+  </div>
+
+  <script src="js/noir-site.js?v=20260914-final" defer></script>
+</body>
 </html>
