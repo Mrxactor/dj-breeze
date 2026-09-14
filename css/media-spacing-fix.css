@@ -41,13 +41,23 @@
 }
 
 /* ARCHIVE
-   Flyer fills the full card width edge-to-edge and is never cropped. */
+   Keep every flyer full-width and full-height without cropping. More importantly,
+   archive grid items must NOT stretch to the height of the tallest card in the row. */
+.archive-grid{
+  align-items:start !important;
+}
 .archive-card{
   min-width:0;
+  width:100%;
+  height:auto !important;
+  align-self:start !important;
   overflow:hidden;
   border-radius:16px;
   background:#0d0d0c;
   border:1px solid rgba(255,255,255,.12);
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-start !important;
 }
 .archive-image{
   aspect-ratio:auto !important;
@@ -56,13 +66,13 @@
   border:0 !important;
   border-radius:0 !important;
   padding:0 !important;
-  display:flex;
-  flex-direction:column;
-  gap:0;
+  display:block !important;
+  flex:0 0 auto !important;
 }
 .archive-image img{
   width:100% !important;
   height:auto !important;
+  max-height:none !important;
   aspect-ratio:auto !important;
   object-fit:contain !important;
   object-position:center center !important;
@@ -78,8 +88,9 @@
   position:static !important;
   inset:auto !important;
   min-width:0;
-  padding:14px 14px 12px !important;
+  padding:12px 14px 8px !important;
   background:#0d0d0c;
+  flex:0 0 auto !important;
 }
 .archive-overlay small{
   margin-bottom:7px !important;
@@ -90,8 +101,10 @@
   overflow-wrap:anywhere;
 }
 .archive-meta{
-  padding:0 14px 14px !important;
+  padding:0 14px 12px !important;
+  margin:0 !important;
   background:#0d0d0c;
+  flex:0 0 auto !important;
 }
 
 @media(max-width:1040px){
@@ -103,6 +116,9 @@
   .gallery-card.featured{
     height:auto !important;
     grid-row:auto !important;
+  }
+  .archive-grid{
+    align-items:start !important;
   }
 }
 
@@ -127,9 +143,9 @@
     border-radius:13px 13px 0 0;
   }
   .archive-overlay{
-    padding:12px 12px 10px !important;
+    padding:10px 12px 7px !important;
   }
   .archive-meta{
-    padding:0 12px 12px !important;
+    padding:0 12px 10px !important;
   }
 }
