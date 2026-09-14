@@ -2,7 +2,11 @@
 
 /* LIVE / GALLERY
    Fill each card completely. No inner gutter/air. Rounded corners belong to the
-   outer card so the image itself fills the radius. */
+   outer card so the image itself fills the radius. Keep the existing width,
+   but make the cards slightly shorter vertically. */
+.gallery-grid{
+  grid-auto-rows:300px !important;
+}
 .gallery-card{
   position:relative;
   background:#0d0d0c !important;
@@ -88,7 +92,23 @@
   background:#0d0d0c;
 }
 
+@media(max-width:1040px){
+  .gallery-grid{
+    grid-auto-rows:280px !important;
+  }
+  .gallery-card.featured{
+    height:380px !important;
+  }
+}
+
 @media(max-width:680px){
+  .gallery-grid{
+    grid-auto-rows:auto !important;
+  }
+  .gallery-card,
+  .gallery-card.featured{
+    height:350px !important;
+  }
   .gallery-card{
     border-radius:14px;
   }
