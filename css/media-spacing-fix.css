@@ -1,32 +1,35 @@
-/* DJ Breeze media framing — edge-to-edge cards, 2026-09-14 */
+/* DJ Breeze media framing — full artwork, edge-to-edge cards, 2026-09-14 */
 
 /* LIVE / GALLERY
-   Fill each card completely. No inner gutter/air. Rounded corners belong to the
-   outer card so the image itself fills the radius. Keep the existing width,
-   but make the cards slightly shorter vertically. */
+   Important: never crop event artwork. Each image keeps its original aspect ratio,
+   while the card hugs the image edge-to-edge so there is no empty inner gutter. */
 .gallery-grid{
-  grid-auto-rows:300px !important;
+  grid-auto-rows:auto !important;
+  align-items:start !important;
 }
-.gallery-card{
+.gallery-card,
+.gallery-card.featured{
   position:relative;
+  height:auto !important;
+  grid-row:auto !important;
   background:#0d0d0c !important;
   border:1px solid rgba(255,255,255,.10);
   border-radius:16px;
   overflow:hidden !important;
   padding:0 !important;
+  align-self:start !important;
 }
-.gallery-card img{
+.gallery-card img,
+.gallery-card.featured img{
   width:100% !important;
-  height:100% !important;
-  object-fit:cover !important;
+  height:auto !important;
+  max-height:none !important;
+  aspect-ratio:auto !important;
+  object-fit:contain !important;
   object-position:center center !important;
   display:block;
   border-radius:inherit;
   transform:none !important;
-}
-/* Keep the artist portrait framed slightly higher. */
-.gallery-card.featured img{
-  object-position:center top !important;
 }
 .gallery-card:hover img{
   transform:none !important;
@@ -38,8 +41,7 @@
 }
 
 /* ARCHIVE
-   Flyer fills the full card width edge-to-edge. Copy stays underneath so it
-   never sits on top of flyer artwork. */
+   Flyer fills the full card width edge-to-edge and is never cropped. */
 .archive-card{
   min-width:0;
   overflow:hidden;
@@ -94,10 +96,13 @@
 
 @media(max-width:1040px){
   .gallery-grid{
-    grid-auto-rows:280px !important;
+    grid-auto-rows:auto !important;
+    align-items:start !important;
   }
+  .gallery-card,
   .gallery-card.featured{
-    height:380px !important;
+    height:auto !important;
+    grid-row:auto !important;
   }
 }
 
@@ -107,9 +112,7 @@
   }
   .gallery-card,
   .gallery-card.featured{
-    height:350px !important;
-  }
-  .gallery-card{
+    height:auto !important;
     border-radius:14px;
   }
   .gallery-card span{
