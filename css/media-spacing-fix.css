@@ -1,59 +1,68 @@
-/* DJ Breeze media spacing / crop fixes — 2026-09-14 */
+/* DJ Breeze media framing — edge-to-edge cards, 2026-09-14 */
 
 /* LIVE / GALLERY
-   Most of these assets contain typography/artwork inside the image itself.
-   Keep the whole artwork visible instead of cropping the edges with cover. */
+   Fill each card completely. No inner gutter/air. Rounded corners belong to the
+   outer card so the image itself fills the radius. */
 .gallery-card{
+  position:relative;
   background:#0d0d0c !important;
   border:1px solid rgba(255,255,255,.10);
-  padding:10px;
+  border-radius:16px;
+  overflow:hidden !important;
+  padding:0 !important;
 }
 .gallery-card img{
   width:100% !important;
   height:100% !important;
-  object-fit:contain !important;
+  object-fit:cover !important;
   object-position:center center !important;
   display:block;
+  border-radius:inherit;
   transform:none !important;
 }
-/* The first/featured card is the artist portrait, where a photographic crop still works best. */
+/* Keep the artist portrait framed slightly higher. */
 .gallery-card.featured img{
-  object-fit:cover !important;
   object-position:center top !important;
 }
 .gallery-card:hover img{
   transform:none !important;
 }
 .gallery-card span{
-  left:22px !important;
-  bottom:22px !important;
-  max-width:calc(100% - 44px);
+  left:14px !important;
+  bottom:14px !important;
+  max-width:calc(100% - 28px);
 }
 
 /* ARCHIVE
-   Give every flyer a real inner frame and place its title below the artwork,
-   so no flyer text/logo is hidden by cropping or overlay copy. */
+   Flyer fills the full card width edge-to-edge. Copy stays underneath so it
+   never sits on top of flyer artwork. */
 .archive-card{
   min-width:0;
+  overflow:hidden;
+  border-radius:16px;
+  background:#0d0d0c;
+  border:1px solid rgba(255,255,255,.12);
 }
 .archive-image{
   aspect-ratio:auto !important;
   overflow:hidden !important;
   background:#0d0d0c !important;
-  border:1px solid rgba(255,255,255,.14) !important;
-  padding:10px 10px 12px;
+  border:0 !important;
+  border-radius:0 !important;
+  padding:0 !important;
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:0;
 }
 .archive-image img{
   width:100% !important;
   height:auto !important;
-  aspect-ratio:3/4;
+  aspect-ratio:auto !important;
   object-fit:contain !important;
   object-position:center center !important;
   display:block;
   background:#111;
+  border-radius:15px 15px 0 0;
   transform:none !important;
 }
 .archive-card:hover img{
@@ -63,7 +72,8 @@
   position:static !important;
   inset:auto !important;
   min-width:0;
-  padding:0 4px 2px;
+  padding:14px 14px 12px !important;
+  background:#0d0d0c;
 }
 .archive-overlay small{
   margin-bottom:7px !important;
@@ -74,27 +84,29 @@
   overflow-wrap:anywhere;
 }
 .archive-meta{
-  padding:10px 4px 0 !important;
+  padding:0 14px 14px !important;
+  background:#0d0d0c;
 }
 
 @media(max-width:680px){
   .gallery-card{
-    padding:8px;
+    border-radius:14px;
   }
   .gallery-card span{
-    left:18px !important;
-    bottom:18px !important;
-    max-width:calc(100% - 36px);
+    left:12px !important;
+    bottom:12px !important;
+    max-width:calc(100% - 24px);
   }
-  .archive-image{
-    padding:8px 8px 11px;
-    gap:10px;
+  .archive-card{
+    border-radius:14px;
   }
   .archive-image img{
-    aspect-ratio:auto;
-    max-height:78svh;
+    border-radius:13px 13px 0 0;
   }
   .archive-overlay{
-    padding-inline:4px;
+    padding:12px 12px 10px !important;
+  }
+  .archive-meta{
+    padding:0 12px 12px !important;
   }
 }
