@@ -1,7 +1,7 @@
 {
-  "provider": "supabase",
   "enabled": true,
-  "url": "https://ogdkgiupqsienybatmpl.supabase.co",
-  "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9nZGtnaXVwcXNpZW55YmF0bXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg5Njg5NzksImV4cCI6MjEwNDU0NDk3OX0.NwfReiGRKVZxrbgCfOlxkE8Iz-M-7b2QjSofhewcf8U",
-  "note": "Public Supabase URL and anon key only. Never place a service_role key in this public repository."
+  "url": "https://hwqodjvxyepimtxpbilr.supabase.co",
+  "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3cW9kanZ4eWVwaW10eHBiaWxyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNjA0ODUsImV4cCI6MjEwNDkzNjQ4NX0.KZudTS0JjhGWhcYIQZvgVMT5-6H-HA_WILOfzmv1g4w",
+  "projectRef": "hwqodjvxyepimtxpbilr",
+  "mode": "supabase-cms-v2"
 }
